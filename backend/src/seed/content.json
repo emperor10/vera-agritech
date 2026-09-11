@@ -1,0 +1,352 @@
+{
+  "settings": {
+    "companyName": "Vera AgriTech Ltd.",
+    "tagline": "Africa's Urban Agriculture Infrastructure Company",
+    "phone": "+234 803 521 7807",
+    "whatsapp": "2348035217807",
+    "whatsappMessage": "Hello Vera AgriTech, I would like to inquire about your climate-smart solutions.",
+    "email": "hello@veraagritech.com",
+    "address": "No. 4 Alhaji R.A. Akinpelu Close, Oni and Sons Area, Ring Road, Ibadan, Oyo State, Nigeria",
+    "social": {
+      "facebook": "https://facebook.com/veraagritech",
+      "instagram": "https://instagram.com/veraagritech",
+      "twitter": "https://x.com/veraagritech"
+    },
+    "footerTagline": "Building Africa's most scalable and impactful urban agriculture platform. Advancing food security through climate-smart farming solutions.",
+    "founder": "Dr. Nurudeen Samuel Lawal",
+    "copyrightYear": "2026"
+  },
+  "navigation": {
+    "primary": [
+      { "label": "Home", "path": "/" },
+      {
+        "label": "Solutions",
+        "children": [
+          { "label": "Greenhouses & Screen Houses", "path": "/solutions/greenhouses" },
+          { "label": "How It Works", "path": "/solutions/how-it-works" },
+          { "label": "Crops & Production", "path": "/solutions/crops-and-production" },
+          { "label": "Market Access & Offtake", "path": "/solutions/market-access" },
+          { "label": "Training & Support", "path": "/training-support" },
+          { "label": "Agribusiness Consulting", "path": "/consulting" }
+        ]
+      },
+      { "label": "Financing", "path": "/financing" },
+      { "label": "Calculator", "path": "/calculator" },
+      {
+        "label": "Company",
+        "children": [
+          { "label": "About Vera", "path": "/about" },
+          { "label": "The Vera Model", "path": "/the-vera-model" },
+          { "label": "CityHarvest Business Model", "path": "/business-model" },
+          { "label": "Projects & Case Studies", "path": "/projects" },
+          { "label": "Investors & Partners", "path": "/investors" },
+          { "label": "Insights & Blog", "path": "/resources" }
+        ]
+      },
+      { "label": "FAQs", "path": "/faqs" },
+      { "label": "Contact", "path": "/contact" }
+    ],
+    "cta": { "label": "Get Started", "path": "/get-started" }
+  },
+  "home": {
+    "seoTitle": "Vera AgriTech | Smart Urban Hydroponics & Screen Houses in Nigeria",
+    "seoDescription": "Vera AgriTech Ltd builds Africa's most scalable urban agriculture platform with screen houses, smart irrigation, and hydroponics.",
+    "hero": {
+      "eyebrow": "Climate-Smart Urban Agriculture",
+      "heading": "Growing Possibilities. Creating Impact.",
+      "subheading": "Building Climate-Smart Food Production Systems Across African Cities",
+      "body": "Vera AgriTech Ltd builds sustainable, climate-resilient farming systems. We deploy low-cost screen houses, advanced hydroponics, and smart drip irrigation for year-round high-yield vegetable production.",
+      "ctaPrimary": { "label": "Explore Our Solutions", "path": "/solutions/greenhouses" },
+      "ctaSecondary": { "label": "Talk to Us", "path": "/contact" },
+      "imageKey": "home-hero-image",
+      "imageAlt": "Vera AgriTech smart greenhouse system",
+      "slides": [
+        { "imageKey": "home-hero-slide-1", "imageAlt": "Greenhouse and hydroponics production tunnel", "eyebrow": "Smart Agriculture" },
+        { "imageKey": "home-hero-slide-2", "imageAlt": "Farmer working inside a modern screen house", "eyebrow": "Climate-Smart Farming" },
+        { "imageKey": "home-hero-slide-3", "imageAlt": "Smart drip irrigation and farm technology", "eyebrow": "Agricultural Infrastructure" },
+        { "imageKey": "home-hero-slide-4", "imageAlt": "Screen house equipment installation", "eyebrow": "Sustainable Food Systems" },
+        { "imageKey": "home-hero-slide-5", "imageAlt": "Aerial view of a Vera AgriTech project site", "eyebrow": "Proven Impact" }
+      ]
+    },
+    "stats": [
+      { "value": "125+", "label": "Screen Houses Installed" },
+      { "value": "500+", "label": "Farmers Trained" },
+      { "value": "300+", "label": "Youth & Women Empowered" },
+      { "value": "90%", "label": "Water Savings Achieved" },
+      { "value": "3x–5x", "label": "Higher Crop Yields" }
+    ],
+    "about": {
+      "eyebrow": "Who We Are",
+      "heading": "Growing Smarter. Feeding the Future.",
+      "mission": "Changing Africa's Agricultural Narrative",
+      "pillars": [
+        { "title": "Climate-Smart Infrastructure", "description": "Screen houses, greenhouse tunnels and irrigation systems engineered for tropical conditions." },
+        { "title": "Precision Agronomy & Input Supply", "description": "Seeds, nutrients, growing media and crop protection products for consistent, high-quality production." },
+        { "title": "Guaranteed Offtake (Vera Veg Stores)", "description": "A structured route to market that removes the guesswork of selling fresh produce." }
+      ]
+    },
+    "challenge": {
+      "eyebrow": "The Challenge",
+      "heading": "Farming in Nigeria carries real risk",
+      "body": "In Nigeria, food production is limited by erratic seasonal rains, high pest vulnerability, post-harvest losses, and disconnected local supply channels that impact farmers' income."
+    },
+    "innovation": {
+      "eyebrow": "Our Innovation",
+      "heading": "Controlled environments that remove the guesswork",
+      "body": "By growing inside engineered screen houses with drip irrigation and soilless media, Vera AgriTech's systems eliminate many of the risks of open-field farming — delivering 3x–5x higher yields on up to 90% less water."
+    },
+    "comparison": {
+      "eyebrow": "Traditional vs. Vera AgriTech",
+      "heading": "See the difference controlled-environment agriculture makes",
+      "rows": [
+        { "metric": "Water Consumption", "traditional": "100% (High wastage)", "vera": "Save up to 90% (Recirculated drip)" },
+        { "metric": "Yield per m²", "traditional": "Baseline (Seasonal)", "vera": "3x–5x Higher" },
+        { "metric": "Pest Protection", "traditional": "Low (Chemical sprays)", "vera": "Up to 95% Protected (Screen netting)" },
+        { "metric": "Climate Resilience", "traditional": "Vulnerable", "vera": "Year-Round Growth" },
+        { "metric": "Soil Degradation", "traditional": "High risk", "vera": "Zero Soil Needed" }
+      ]
+    },
+    "solutionsPreview": {
+      "eyebrow": "What We Do",
+      "heading": "One connected model, five ways we support you",
+      "items": [
+        { "title": "Screen Houses & Greenhouses", "description": "Engineering and construction of cost-effective, wind-resistant steel arched screen houses and plastic greenhouse tunnels tailored to tropical conditions.", "path": "/solutions/greenhouses" },
+        { "title": "Hydroponic & Soilless Kits", "description": "Complete installation of modern soilless farming setups, including grow bags, coco peat substrates, nutrient dosing rigs, and vertical farming structures.", "path": "/solutions/greenhouses" },
+        { "title": "Irrigation & Farm Machinery", "description": "Advanced drip irrigation setups, automated venturi fertilizer dosing injectors, gravity feeding tanks, and crop irrigation control systems.", "path": "/solutions/how-it-works" },
+        { "title": "Commercial Crop Production", "description": "Consistent, year-round harvest of premium high-value crops including bell peppers (red and yellow), vine tomatoes, cucumbers, and culinary herbs.", "path": "/solutions/crops-and-production" },
+        { "title": "Training & Technical Advisory", "description": "Specialized training programs for cooperatives, youth, women, and urban individuals on hydroponics, nursery setup, pest management, and farm operations.", "path": "/training-support" },
+        { "title": "Agribusiness Consulting", "description": "Expert feasibility audits, farm layout mapping, agricultural investment planning, and crop productivity advisory for large-scale operations.", "path": "/consulting" }
+      ]
+    },
+    "founderPreview": {
+      "eyebrow": "Leadership",
+      "heading": "Meet the Founder",
+      "name": "Dr. Nurudeen S. Lawal",
+      "bio": "An agripreneur and agricultural engineer on a mission to strengthen Africa's food systems. With expertise in irrigation engineering, soil and water conservation, and soilless crop nutrition, he founded Vera AgriTech to commercialise tropical-adapted screen houses and hydroponic systems.",
+      "credentials": "COREN-registered engineer with 20+ years experience; Ph.D. in Agricultural and Environmental Engineering from University of Ibadan",
+      "imageKey": "founder-photo",
+      "imageAlt": "Dr. Nurudeen S. Lawal, Founder of Vera AgriTech",
+      "sdgAlignment": ["SDG 2 – Zero Hunger", "SDG 13 – Climate Action", "SDG 15 – Life on Land"],
+      "collaborators": ["IFAD", "SMEDAN", "Sterling Bank", "Rex Insurance"]
+    },
+    "testimonials": [
+      { "name": "Chinedu Okafor", "location": "Abuja", "quote": "Living in Abuja, I was deeply worried about food security and the safety of traditional farming due to rural banditry. Vera AgriTech's urban screen house model allowed me to start a thriving, pest-free tomato farm right in my backyard where I feel completely safe.", "imageKey": "testimonial-chinedu" },
+      { "name": "Amina Bello", "location": "Kano", "quote": "The traceability and quality of my produce means I can supply supermarket clients directly and earn a premium price for it.", "imageKey": "testimonial-amina" },
+      { "name": "Oluwaseun Ajayi", "location": "Ibadan", "quote": "As a retiree in Ibadan, I wanted a secure agribusiness investment. The Vera AgriTech triple security model — especially the guaranteed produce offtake — eliminated all my market worries.", "imageKey": "testimonial-oluwaseun" },
+      { "name": "Kofi Mensah", "location": "Accra", "quote": "Affordable hydroponics made urban farming genuinely profitable for me, not just a hobby.", "imageKey": "testimonial-kofi" },
+      { "name": "Chioma Nwachukwu", "location": "Port Harcourt", "quote": "Farming inside a cooperative cluster means I always have peer support close by — it changes how confident you feel running the farm.", "imageKey": "testimonial-chioma" }
+    ],
+    "ctaBanner": {
+      "heading": "Affordable. Profitable. Scalable.",
+      "body": "Together, we can build greener cities, generate stable urban jobs, and build a food-secure Nigeria.",
+      "cta": { "label": "Partner With Us", "path": "/contact" }
+    }
+  },
+  "theVeraModel": {
+    "seoTitle": "The Vera Model | Vera AgriTech",
+    "seoDescription": "How Vera AgriTech's greenhouse infrastructure, production support, training, inputs, financing and market access work together.",
+    "hero": { "eyebrow": "The Vera Model", "heading": "How Vera AgriTech works, end to end", "body": "Vera AgriTech connects greenhouse infrastructure, production support, training, inputs, financing and guaranteed market access into a single, coordinated model — so you can focus on growing." },
+    "pillars": [
+      { "title": "Climate-Smart Infrastructure", "description": "Screen houses, greenhouse tunnels, drip irrigation and fertigation engineered for tropical conditions." },
+      { "title": "Precision Agronomy & Input Supply", "description": "Seeds, nutrient solutions, coco peat growing media, fertilizers and bio-protection products for consistent, premium-quality harvests." },
+      { "title": "Guaranteed Offtake (Vera Veg Stores)", "description": "A structured, aggregated route to market so produce is sold reliably and at fair value." }
+    ],
+    "valueChain": ["Customer", "Greenhouse", "Crop Cycle", "Monitoring", "Yield", "Harvest", "Offtake / Sales", "Revenue", "Repayment", "Next Production Cycle"],
+    "todayVsTowards": {
+      "today": ["Distributed information", "Manual reporting", "Multiple communication channels", "Limited real-time visibility", "Fragmented financial and farm information"],
+      "towards": ["Centralised information", "Structured workflows", "Portfolio-level visibility", "Customer transparency", "Data-driven decision-making", "Scalable operations"]
+    }
+  },
+  "greenhouses": {
+    "seoTitle": "Greenhouses & Screen Houses | Vera AgriTech",
+    "seoDescription": "Explore Vera AgriTech's screen house and greenhouse packages, sizes, infrastructure and technical support.",
+    "hero": { "eyebrow": "Solutions", "heading": "Greenhouses & Screen Houses", "body": "Engineering and construction of cost-effective, wind-resistant steel arched screen houses and plastic greenhouse tunnels, tailored to tropical conditions and matched to your scale and budget." },
+    "included": ["Low-cost screen houses", "Drip irrigation systems", "Fertigation units", "Hydroponic NFT / gutter systems", "Water storage tanks & plumbing", "On-site engineering & technical support"],
+    "targetLocations": ["Homes", "Schools", "Institutions", "Estates", "Industries", "Rooftops"],
+    "packagesIntro": "Tailored setup options matching various scales, land availability, and farmer experience. Exact pricing and turnover figures are indicative and will be confirmed by the Vera team for your location and package.",
+    "hydroponicAdvantage": [
+      { "title": "Up to 90% less water use", "description": "Recirculated drip irrigation dramatically reduces water consumption versus open-field farming." },
+      { "title": "Year-round production", "description": "A controlled environment means production is not limited to a single rainy season." },
+      { "title": "Higher yields per square metre", "description": "Vertical and intensive growing systems make the most of every square metre under cover." },
+      { "title": "Cleaner produce", "description": "Soilless media and screened structures reduce contamination and disease pressure." },
+      { "title": "Premium market prices", "description": "Consistent quality supports stronger, more reliable pricing with offtake partners." }
+    ],
+    "suitableCrops": ["Bell Peppers (red & yellow)", "Vine Tomatoes", "Cucumbers", "Lettuce", "Kale", "Celery", "Basil", "Mint", "Parsley", "Culinary herbs"]
+  },
+  "howItWorks": {
+    "seoTitle": "How It Works | Vera AgriTech",
+    "seoDescription": "The complete Vera AgriTech customer journey from choosing a package to harvest, sale and repayment.",
+    "hero": { "eyebrow": "How It Works", "heading": "Your journey with Vera AgriTech", "body": "From choosing a package to your first harvest and beyond — here is the complete production journey." },
+    "steps": [
+      { "title": "Choose", "description": "Select the screen house / greenhouse package that fits your budget, space and goals." },
+      { "title": "Finance", "description": "Make your initial contribution and agree a pay-as-you-grow repayment plan." },
+      { "title": "Installation", "description": "Vera's technical team installs the screen house, irrigation and hydroponic systems on-site." },
+      { "title": "Plant", "description": "Certified seeds and seedlings are planted in your chosen growing media." },
+      { "title": "Grow", "description": "Ongoing crop nutrition, irrigation and pest management support your crop cycle." },
+      { "title": "Monitor", "description": "Scheduled inspections, measurements and farm updates track your crop's progress." },
+      { "title": "Harvest", "description": "Your crop is harvested at peak quality according to a confirmed harvest schedule." },
+      { "title": "Sell", "description": "Produce is aggregated and marketed to hotels, restaurants, supermarkets and food processors." },
+      { "title": "Revenue", "description": "Sales proceeds are recorded and allocated according to your repayment agreement." },
+      { "title": "Repayment", "description": "A share of revenue goes toward loan repayment, with the balance paid to you." },
+      { "title": "Next Cycle", "description": "You replant and begin your next production cycle, building a track record over time." }
+    ]
+  },
+  "cropsProduction": {
+    "seoTitle": "Crops & Production | Vera AgriTech",
+    "seoDescription": "Supported crops, crop cycles and production information for Vera AgriTech screen houses.",
+    "hero": { "eyebrow": "Crops & Production", "heading": "What you can grow, and how production is managed", "body": "Every greenhouse can support one or more production cycles over its lifetime, each treated as its own operational record — from planting date to harvest and yield." },
+    "crops": [
+      { "name": "Bell Peppers (red & yellow)", "note": "A flagship high-value crop for screen house production.", "imageKey": "crop-bell-pepper" },
+      { "name": "Vine Tomatoes", "note": "Consistent year-round demand from retail and food-service buyers.", "imageKey": "crop-tomato" },
+      { "name": "Cucumbers", "note": "Fast-cycling crop suited to hydroponic gutters and grow bags.", "imageKey": "crop-cucumber" },
+      { "name": "Lettuce", "note": "Short crop cycle, ideal for NFT hydroponic systems.", "imageKey": "crop-lettuce" },
+      { "name": "Kale", "note": "Nutrient-dense leafy green with strong urban market demand.", "imageKey": "crop-kale" },
+      { "name": "Celery", "note": "Grows well in controlled, screened environments.", "imageKey": "crop-celery" },
+      { "name": "Basil, Mint & Parsley", "note": "Culinary herbs suited to premium hospitality and retail buyers.", "imageKey": "crop-herbs" }
+    ],
+    "cropCycleFields": ["Greenhouse", "Customer", "Crop", "Planting date", "Expected harvest date", "Production status", "Expected yield", "Recorded yield", "Harvest date", "Actual yield", "Revenue", "Interventions", "Historical performance"],
+    "note": "This creates a production history for every greenhouse, helping Vera and its farmers understand which crops, locations and practices produce the strongest outcomes over time."
+  },
+  "financing": {
+    "seoTitle": "Financing | Vera AgriTech",
+    "seoDescription": "Vera AgriTech's Pay-As-You-Grow financing model, repayment structure and triple security model.",
+    "hero": { "eyebrow": "Financing", "heading": "Pay-As-You-Grow — financing linked to your harvest", "body": "We structure repayments based on your harvests to make modern, controlled-environment farming financially achievable." },
+    "affordableEntry": { "title": "Affordable Entry", "description": "Farmers contribute a 10%–20% initial down payment to begin installation.", "example": "Example: Screen house cost = ₦2,000,000. Farmer pays ₦200,000 – ₦400,000 to begin." },
+    "productionLinkedRepayment": { "title": "Production-Linked Repayment", "description": "Repayment occurs after harvest, tied directly to crop sales.", "example": "Example: Harvest sales = ₦500,000. Allocation: 60% to farmer, 30% to loan repayment, 10% to maintenance & insurance fund." },
+    "cropHedgedRepayment": { "title": "Crop-Hedged Repayment System (Urban Farm Purchase Agreement – UFPA)", "description": "Vera AgriTech is the first buyer of your produce. Repayment is deducted at source before the balance is paid to you.", "agreements": ["Screen house financing agreement", "Produce supply agreement", "Input supply agreement"] },
+    "tripleSecurity": [
+      { "title": "Security Layer 1 — Produce Offtake", "description": "All produce is marketed through the company. Repayment is deducted at source." },
+      { "title": "Security Layer 2 — Equipment Ownership", "description": "Vera AgriTech retains ownership of the screen house, irrigation and hydroponic equipment until full repayment." },
+      { "title": "Security Layer 3 — Cooperative Guarantee", "description": "Farmers operate in clusters (e.g. 50 farmers per cluster) as cooperative members. Peer monitoring improves repayment." }
+    ],
+    "additionalProtection": { "title": "Additional Risk Protection — Urban Agriculture Insurance Fund", "description": "2% of sales value is saved to protect against disease outbreaks, storm damage, fire and water supply disruptions." },
+    "disclaimer": "The exact commercial terms, interest treatment and repayment calculations shown here are indicative examples pending final validation by the Vera AgriTech team, and will be confirmed before any agreement is signed."
+  },
+  "marketAccess": {
+    "seoTitle": "Market Access & Offtake | Vera AgriTech",
+    "seoDescription": "How Vera AgriTech aggregates and markets produce to hotels, restaurants, supermarkets, hospitals, schools and food processors.",
+    "hero": { "eyebrow": "Market Access & Offtake", "heading": "We aggregate and sell your produce to trusted buyers", "body": "Guaranteed offtake removes the hardest part of farming — finding a reliable buyer at a fair price." },
+    "buyers": ["Hotels", "Restaurants", "Supermarkets", "Hospitals", "Schools", "Food processors"],
+    "process": ["Harvest confirmation", "Aggregated crop sorting & packhouse", "Standardized quality grading", "Logistics & delivery dispatch", "Direct sales to regional buyers", "Revenue recorded against your account"]
+  },
+  "trainingSupport": {
+    "seoTitle": "Training & Support | Vera Agribusiness Academy",
+    "seoDescription": "Vera Agribusiness Academy training programmes on hydroponics, nursery setup, screen house engineering and farm operations.",
+    "hero": { "eyebrow": "Vera Agribusiness Academy", "heading": "Empowering the Next Generation of Agripreneurs", "body": "Professional, hands-on training on soil-free cultivation, nursery engineering, pest management, and greenhouse business operations." },
+    "levels": [
+      { "level": "Level 1 — Foundation", "items": ["Basic vegetable production", "Irrigation management", "Crop nutrition", "Pest management"] },
+      { "level": "Level 2 — Advanced", "items": ["Hydroponics production", "Greenhouse management", "Record keeping", "Marketing"] },
+      { "level": "Level 3 — Business", "items": ["Agribusiness management", "Expansion planning", "Cooperative management"] }
+    ],
+    "courses": [
+      { "title": "Hydroponics & Soilless Cultivation", "description": "Substrate formulations (coco peat, perlite), nutrient dosing recipes, electrical conductivity (EC) tracking, and pH calibration." },
+      { "title": "Controlled Environment Nursery Setup", "description": "Tray seeding techniques, temperature/humidity stabilization, root optimization, and crop hardening before transplantation." },
+      { "title": "Screen House Structural Engineering", "description": "Arch metal bending, structural foundations, shade netting installation, anti-insect mesh tensioning, and drip line installation." },
+      { "title": "Agribusiness Farm Operations", "description": "Farm inventory tracking, crop cycle forecasting, post-harvest grading, cold-chain transport management, and marketing channel contracts." }
+    ],
+    "deliveryMethods": ["Training Centres", "Mobile Teams", "Online Platform", "WhatsApp Support"],
+    "metrics": [
+      { "value": "70%", "label": "Women Enrollment Goal" },
+      { "value": "100%", "label": "Practical Internship Placements" }
+    ]
+  },
+  "consulting": {
+    "seoTitle": "Agribusiness Consulting & Technical Advisory | Vera AgriTech",
+    "seoDescription": "Feasibility studies, ROI modeling, turnkey project management and agronomic audits from Vera AgriTech.",
+    "hero": { "eyebrow": "Agribusiness Consulting", "heading": "Agribusiness Consulting & Technical Advisory", "body": "Expert feasibility audits, farm layout mapping, agricultural investment planning, and crop productivity advisory for large-scale operations." },
+    "services": [
+      { "title": "Agribusiness Feasibility Studies", "description": "Custom reports analyzing local water chemistry, solar exposure, crop suitability, market channels, and financial projections." },
+      { "title": "Farm ROI & Budget Modeling", "description": "Interactive financial tools covering crop cycles, labor costs, inputs, and payback timelines." },
+      { "title": "Turnkey Expansion Project Management", "description": "Full coordination from site preparation through structural installation and crop transplantation." },
+      { "title": "Agronomic Diagnosis & Audits", "description": "Direct plant and soil analysis addressing pest issues, nutrient imbalances, and irrigation problems." }
+    ],
+    "cta": "Book a 30-minute consultation with Dr. Nurudeen Samuel Lawal."
+  },
+  "aboutVera": {
+    "seoTitle": "About Vera AgriTech",
+    "seoDescription": "Vera AgriTech's mission, founder profile, SDG alignment and strategic collaborators.",
+    "hero": { "eyebrow": "About Vera", "heading": "Changing Africa's Agricultural Narrative", "body": "Vera AgriTech Ltd is a Nigerian agricultural technology company based in Ibadan, Oyo State, building climate-smart food production systems across African cities." },
+    "founder": {
+      "name": "Dr. Nurudeen S. Lawal",
+      "bio": "An agripreneur and agricultural engineer on a mission to strengthen Africa's food systems. With expertise in irrigation engineering, soil and water conservation, and soilless crop nutrition, he founded Vera AgriTech to commercialise tropical-adapted screen houses and hydroponic systems.",
+      "credentials": "COREN-registered engineer with 20+ years experience; Ph.D. in Agricultural and Environmental Engineering from University of Ibadan",
+      "imageKey": "founder-photo",
+      "imageAlt": "Dr. Nurudeen S. Lawal, Founder of Vera AgriTech"
+    },
+    "sdgAlignment": [
+      { "code": "SDG 2", "title": "Zero Hunger" },
+      { "code": "SDG 13", "title": "Climate Action" },
+      { "code": "SDG 15", "title": "Life on Land" }
+    ],
+    "collaborators": ["IFAD", "SMEDAN", "Sterling Bank", "Rex Insurance"]
+  },
+  "projects": {
+    "seoTitle": "Projects & Case Studies | Vera AgriTech",
+    "seoDescription": "Active Vera AgriTech installations, including the Ibadan Bell Pepper Project and Hydroponic Lettuce Pilot.",
+    "hero": { "eyebrow": "Featured Projects", "heading": "Featured Projects & Case Studies", "body": "Active agritech installations demonstrating what Vera AgriTech's screen house and hydroponic systems can achieve." },
+    "caseStudies": [
+      {
+        "title": "Ibadan Bell Pepper Project",
+        "summary": "10 arched steel screen houses covering 0.5 hectares, using drip irrigation and coco peat substrate.",
+        "stats": [
+          { "label": "CapEx", "value": "₦12,500,000" },
+          { "label": "Annual Yield", "value": "18.5 tonnes (yellow & red bell peppers)" },
+          { "label": "Annual Revenue", "value": "₦22,200,000" },
+          { "label": "Water Reduction", "value": "90% vs. open-field" },
+          { "label": "Pesticide Reduction", "value": "95% fewer chemical applications" }
+        ],
+        "imageKey": "project-ibadan-bell-pepper"
+      },
+      {
+        "title": "Hydroponic Lettuce Pilot",
+        "summary": "Vertical NFT (Nutrient Film Technique) system in Ibadan.",
+        "stats": [
+          { "label": "Footprint", "value": "150 m²" },
+          { "label": "Weekly Harvest", "value": "450 heads of premium lettuce" },
+          { "label": "Crop Cycle", "value": "25 days" },
+          { "label": "Client Feedback", "value": "Crisp quality, 0% soil contamination, extended shelf life" }
+        ],
+        "imageKey": "project-lettuce-pilot"
+      }
+    ],
+    "note": "All figures shown are from documented pilot installations. Figures for new packages will be confirmed by the Vera AgriTech team as they are validated."
+  },
+  "investors": {
+    "seoTitle": "Investor Relations & Partnership Framework | Vera AgriTech",
+    "seoDescription": "The urban agribusiness case for Africa, Vera AgriTech's scalability blueprint and strategic partnerships.",
+    "hero": { "eyebrow": "Investor Relations", "heading": "Investor Relations & Partnership Framework", "body": "The urban agribusiness case for Africa — climate-smart farming infrastructure built for sustainable, commercial returns." },
+    "blueprint": [
+      { "title": "Low-Cost Infrastructure Injection", "description": "Screen houses designed to reduce installation costs by approximately 50% relative to Western imports." },
+      { "title": "High Asset Utilization", "description": "Optimized asset usage through continuous crop rotation across the calendar year." },
+      { "title": "Turnkey Farm Management", "description": "Comprehensive farm management services including construction, agronomy support and market linkages." }
+    ],
+    "stakeholders": ["Development institutions (IFAD, AfDB)", "Financial partners (Sterling Bank, Rex Insurance)", "Government bodies (SMEDAN, BOI)"],
+    "sdgAlignment": ["SDG 2 – Zero Hunger", "SDG 3 – Good Health and Well-Being", "SDG 10 – Reduced Inequalities", "SDG 13 – Climate Action"],
+    "cta": "Request Company Profile"
+  },
+  "faqs": [
+    { "question": "What is soilless / hydroponic farming?", "answer": "Growing crops using inert substrates with soluble mineral nutrients, preventing soil-borne diseases and conserving water." },
+    { "question": "Why screen houses over traditional farming?", "answer": "UV-stabilized mesh netting excludes insect pests (up to 90% reduction), reduces reliance on insecticides, shields crops from heavy rain, and maintains a moderate microclimate." },
+    { "question": "Does Vera supply farm machinery?", "answer": "Yes — hand tillers, sprayers, harvesters, grow trays, drip fittings, water pumps and storage tanks." },
+    { "question": "How do I register for training?", "answer": "Contact us via the website form or WhatsApp. Workshops are held in Ibadan, with customized on-site options available." },
+    { "question": "How does the Pay-As-You-Grow financing work?", "answer": "You make an initial down payment (typically 10–20% of the package cost), and the remaining balance is repaid from a share of your harvest sales after each production cycle." },
+    { "question": "Who buys the produce?", "answer": "Vera AgriTech aggregates and markets produce to hotels, restaurants, supermarkets, hospitals, schools and food processors through its guaranteed offtake model." }
+  ],
+  "privacy": {
+    "effectiveDate": "June 6, 2026",
+    "lastUpdated": "July 7, 2026"
+  },
+  "packages": [
+    { "name": "Starter Farmer", "area": "100 m²", "bestFor": "Youths, graduates, retirees and residential backyards", "costRange": "₦1.5M – ₦2.0M", "turnoverRange": "₦1.5M – ₦2.5M", "includes": ["Steel frame screen house", "Complete drip irrigation kit", "Water storage tank", "Basic training", "Seed starter kit"], "popular": true, "order": 1 },
+    { "name": "Growth Farmer", "area": "250 m²", "bestFor": "Smallholder cooperatives and commercial urban plots", "costRange": "₦3.5M – ₦4.5M", "turnoverRange": "₦4.0M – ₦8.0M", "includes": ["Screen house", "Nutrient dosing rigs", "Coco peat bag channels", "Drip systems", "Advanced training certificate"], "popular": false, "order": 2 },
+    { "name": "Commercial Farmer", "area": "500 m²", "bestFor": "Agribusiness developers and larger community groups", "costRange": "₦6.0M – ₦8.0M", "turnoverRange": "₦8.0M – ₦15.0M", "includes": ["Multi-span screen house", "Complete automated fertigation system", "Full NFT setup", "Dedicated agricultural advisory support"], "popular": false, "order": 3 }
+  ],
+  "scaleUp": {
+    "heading": "Scale-Up Strategy",
+    "phases": [
+      { "phase": "Phase 1 — Pilot (Years 1–2)", "description": "Pilot cities: Ibadan, Lagos, Abuja, and Port Harcourt.", "target": "500 farm systems" },
+      { "phase": "Phase 2 — Regional Rollout (Years 3–5)", "description": "Expansion to Kano, Kaduna, Enugu, and Benin City.", "target": "5,000 farm systems" },
+      { "phase": "Phase 3 — National Scale (Years 5–10)", "description": "Nationwide expansion covering all major Nigerian cities and metropolitan zones.", "target": "50,000 farm systems" }
+    ]
+  }
+}

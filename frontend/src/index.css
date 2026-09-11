@@ -1,0 +1,270 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand palette v2 — "Modern + Premium + African + Agricultural +
+     Technology + Trustworthy". Anchored on three named brand colors:
+     --color-brand-900 = Primary "Deep Forest Green" (#063B2B) — hero
+       backgrounds/overlays, major headings, footer.
+     --color-brand-600 = Secondary green (#16834B) — links, icons,
+       highlights, secondary CTAs, active nav.
+     --color-gold-500  = Accent "Agricultural Gold" (#D99A27) — primary
+       CTA, numbers, small highlights. Used sparingly by design, never as
+       a whole-site color.
+     The rest of each scale is interpolated around those anchors so every
+     existing brand-NNN / gold-NNN / ink-NNN utility already used across
+     the site picks up the new palette automatically. */
+  --color-brand-950: #041f16;
+  --color-brand-900: #063b2b;
+  --color-brand-800: #0b4f38;
+  --color-brand-700: #0f6242;
+  --color-brand-600: #16834b;
+  --color-brand-500: #22a05f;
+  --color-brand-400: #4cb97d;
+  --color-brand-300: #86d2a3;
+  --color-brand-200: #bfe6ce;
+  --color-brand-100: #e1f3e7;
+  --color-brand-50: #f5f8f3;
+
+  --color-gold-700: #7a5514;
+  --color-gold-600: #b17d1c;
+  --color-gold-500: #d99a27;
+  --color-gold-400: #e4b458;
+  --color-gold-300: #efce8c;
+  --color-gold-100: #fbf0da;
+
+  /* Main text #17231E, secondary text #5D6B65, border ~#E5E9E6. */
+  --color-ink-900: #17231e;
+  --color-ink-700: #34413b;
+  --color-ink-500: #5d6b65;
+  --color-ink-300: #94a099;
+  --color-ink-100: #e6eae7;
+
+  /* Manrope: hero headlines, page titles, section headings, package names,
+     statistics, major CTA headings.
+     DM Sans: paragraphs, navigation, buttons, forms, FAQs, calculator labels,
+     tables, small UI text. */
+  --font-display: "Manrope", "Segoe UI", system-ui, sans-serif;
+  --font-sans: "DM Sans", "Segoe UI", system-ui, sans-serif;
+
+  --shadow-soft: 0 10px 30px -12px rgba(6, 59, 43, 0.25);
+  --shadow-card: 0 4px 18px -6px rgba(6, 59, 43, 0.18);
+}
+
+/* Hero image "Ken Burns" crossfade+zoom, and the once-on-load staggered
+   text entrance. Plain @keyframes (not Tailwind's --animate-* theme
+   tokens) since these need bespoke, named durations driven from React
+   (restarted per-slide via a `key` change) rather than a reusable utility. */
+@keyframes hero-kenburns {
+  from { scale: 1; }
+  to { scale: 1.06; }
+}
+
+@keyframes fade-up-in {
+  from { opacity: 0; translate: 0 16px; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+.animate-fade-up {
+  animation: fade-up-in 0.7s ease-out both;
+}
+
+/* Generic scroll-reveal primitive (see useInView/Reveal): hidden+shifted
+   until the element enters the viewport, then eases in once. */
+.reveal {
+  opacity: 0;
+  translate: 0 24px;
+  transition: opacity 0.6s ease-out, translate 0.6s ease-out;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  translate: 0 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-ink-900 antialiased;
+    font-family: var(--font-sans);
+  }
+
+  /* Hero H1 / H2: Manrope 700 (font-bold). H3–H6: Manrope 600 (font-semibold) —
+     e.g. package names, FAQ questions, card titles. */
+  h1, h2 {
+    font-family: var(--font-display);
+    @apply text-brand-950 font-bold tracking-tight;
+  }
+
+  h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    @apply text-brand-950 font-semibold tracking-tight;
+  }
+
+  a {
+    @apply transition-colors;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-gold-500);
+    outline-offset: 2px;
+  }
+}
+
+/* Defined with @utility (not @layer components) so it can be composed via
+   @apply inside btn-primary / btn-secondary / btn-outline-light below —
+   Tailwind v4 only allows @apply of registered utilities. */
+@utility btn {
+  /* border-2 border-transparent on every button (not just the outline
+     variants) so a bordered secondary/outline-light button renders at the
+     exact same box size as a same-padding borderless primary button next
+     to it — only the border *color* differs per variant below. */
+  @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-transparent px-6 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-offset-4 disabled:cursor-not-allowed disabled:opacity-60;
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-py {
+    @apply py-16 sm:py-20 lg:py-24;
+  }
+
+  /* Three button tiers, per the design system: gold fill for the one
+     primary action per view, a green outline for secondary actions, and a
+     plain text+arrow "tertiary" link for the lowest-emphasis actions.
+     .btn-outline-light is a context variant of secondary for use on dark
+     hero/image backgrounds where a green outline would be invisible — not
+     a fourth tier. */
+  .btn-primary {
+    @apply btn bg-gold-500 text-brand-950 shadow-soft hover:bg-gold-400 active:bg-gold-600;
+  }
+
+  .btn-secondary {
+    @apply btn border-2 border-brand-600 bg-transparent text-brand-700 hover:bg-brand-50 active:bg-brand-100;
+  }
+
+  .btn-outline-light {
+    @apply btn border-2 border-white/60 bg-transparent text-white hover:bg-white/10 active:bg-white/20;
+  }
+
+  .btn-tertiary {
+    @apply inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 transition-colors duration-200 hover:text-brand-800;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1.5 rounded-full bg-brand-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-800;
+  }
+
+  /* Card hover motion: a restrained lift (5px, within the 4-6px design
+     spec) + a barely-there scale (1.01) + a stronger shadow + a brand
+     accent border fading in — one shared transition so every card in the
+     design system moves the same, small amount. Deliberately NOT
+     dramatic: no rotation, no big zoom, no bounce. A card's image
+     (.card-media, see PlaceholderImage) and CTA arrow (.card-arrow) react
+     to the same :hover via plain CSS combinators below — Tailwind v4
+     can't @apply the `group`/`group-hover:` utilities (they're variants,
+     not real classes), so this is done in plain CSS instead of the
+     group-hover pattern. `will-change` keeps the lift from looking janky
+     on the first hover. */
+  .card {
+    @apply relative rounded-2xl border border-ink-100 bg-white p-6 shadow-card transition-all duration-300 ease-out will-change-transform hover:-translate-y-[5px] hover:scale-[1.01] hover:border-brand-300 hover:shadow-soft;
+  }
+
+  /* Wraps a card's image so it can zoom on hover without breaking out of
+     the card's rounded corners. */
+  .card-media {
+    @apply overflow-hidden;
+  }
+
+  .card-media img {
+    @apply transition-transform duration-500 ease-out;
+  }
+
+  .card:hover .card-media img {
+    transform: scale(1.05);
+  }
+
+  /* A trailing arrow on a card's CTA that nudges forward on hover. */
+  .card-arrow {
+    @apply inline-block transition-transform duration-300 ease-out;
+  }
+
+  /* .card-arrow-parent is for links styled outside the .card recipe (e.g.
+     a dark glass-panel link) that still want the same arrow-slide-on-hover
+     affordance as a real .card. */
+  .card:hover .card-arrow,
+  .card-arrow-parent:hover .card-arrow {
+    transform: translateX(0.25rem);
+  }
+
+  /* Desktop nav links: color transitions to brand green on hover, with a
+     subtle green underline growing in from the left — not an aggressive
+     full underline, just a soft indicator. 200-250ms, matching the "fast"
+     tier of the site's motion scale. */
+  .nav-link {
+    @apply relative rounded-full px-3 py-2 text-sm font-medium text-ink-700 transition-colors duration-200 hover:text-brand-700;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.25rem;
+    height: 2px;
+    border-radius: 999px;
+    background-color: var(--color-brand-600);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 220ms ease-out;
+  }
+
+  .nav-link:hover::after,
+  .nav-link.is-active::after {
+    transform: scaleX(1);
+  }
+
+  .nav-link.is-active {
+    @apply text-brand-700;
+  }
+
+  .eyebrow {
+    @apply text-sm font-semibold uppercase tracking-[0.14em] text-gold-600;
+  }
+
+  .placeholder-box {
+    @apply flex items-center justify-center gap-2 rounded-xl border-2 border-dashed border-brand-300 bg-brand-50 text-brand-700;
+  }
+
+  /* Small elements (inputs, small buttons, tags): 8-10px radius, per the
+     design system's radius scale (medium = 16px for cards, large = 24px
+     for hero/feature containers, pill for buttons). */
+  .input {
+    @apply mt-1.5 block w-full rounded-lg border border-ink-100 bg-white px-3.5 py-2.5 text-sm text-ink-900 shadow-sm placeholder:text-ink-300 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200;
+  }
+
+  /* Labels: DM Sans 500 (font-medium) across every form on the site. */
+  .form-label {
+    @apply block text-sm font-medium text-brand-950;
+  }
+
+  /* Statistics & calculator figures: Manrope 700 (font-bold) — the big
+     numeric callouts, distinct from the smaller uppercase caption beside them. */
+  .stat-figure {
+    font-family: var(--font-display);
+    @apply font-bold text-brand-950;
+  }
+}
