@@ -12,7 +12,7 @@ const db = require('./index');
  * admin screens (packages, FAQs, testimonials, case studies, crops, blog
  * posts, images, leads, applications) get dedicated tables.
  */
-db.exec(`
+const SCHEMA_SQL = `
   CREATE TABLE IF NOT EXISTS admins (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
@@ -139,6 +139,39 @@ db.exec(`
     entity_id TEXT,
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
   );
-`);
+`;
 
-console.log(`Database migrated at ${require('../config/env').databaseFile}`);
+// SQLite has no "ADD COLUMN IF NOT EXISTS", so new columns added to an
+// already-existing table (like this one, added when uploads moved to
+// Cloudinary) are applied by checking PRAGMA table_info first — safe to
+// run against a database that already has the column, and safe to run
+// against a brand new one that doesn't have the table populated yet either.
+async function addColumnIfMissing(table, column, definition) {
+  const info = await db.prepare(`PRAGMA table_info(${table})`).all();
+  const exists = info.some((col) => col.name === column);
+  if (!exists) {
+    await db.raw.execute(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`);
+    console.log(`Added column ${table}.${column}.`);
+  }
+}
+
+async function migrate() {
+  await db.execMultiple(SCHEMA_SQL);
+  // Tracks the Cloudinary asset id for an uploaded image so it can be
+  // cleanly deleted from Cloudinary (not just unlinked in our own table)
+  // when an admin removes or replaces it.
+  await addColumnIfMissing('images', 'cloudinary_public_id', 'TEXT');
+}
+
+if (require.main === module) {
+  migrate()
+    .then(() => {
+      console.log(`Database migrated at ${require('../config/env').databaseUrl}`);
+    })
+    .catch((err) => {
+      console.error('Migration failed:', err);
+      process.exit(1);
+    });
+}
+
+module.exports = migrate;

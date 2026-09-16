@@ -1,17 +1,21 @@
-const fs = require('fs');
 const env = require('./src/config/env');
+const migrate = require('./src/db/migrate');
 
-// Ensure the database exists (idempotent). On a fresh HostAfrica deployment
-// this means `npm run setup` should already have been run once — this guard
-// simply prevents a crash if it was forgotten, by running the migration.
-require('./src/db/migrate');
-if (!fs.existsSync(env.databaseFile)) {
-  console.warn('Database file was not found even after migration attempt — check DATABASE_FILE path/permissions.');
+async function main() {
+  // Ensure the schema exists (idempotent). Normally `npm run setup` has
+  // already been run once before the app starts — this guard simply
+  // prevents a crash if that step was ever forgotten.
+  await migrate();
+
+  const app = require('./src/app');
+
+  app.listen(env.port, () => {
+    console.log(`Vera AgriTech API listening on port ${env.port} [${env.nodeEnv}]`);
+    console.log(`CORS allowed origins: ${env.corsOrigin.join(', ')}`);
+  });
 }
 
-const app = require('./src/app');
-
-app.listen(env.port, () => {
-  console.log(`Vera AgriTech API listening on port ${env.port} [${env.nodeEnv}]`);
-  console.log(`CORS allowed origins: ${env.corsOrigin.join(', ')}`);
+main().catch((err) => {
+  console.error('Failed to start server:', err);
+  process.exit(1);
 });

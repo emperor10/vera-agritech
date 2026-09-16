@@ -14,16 +14,16 @@ function slugify(text) {
     .replace(/(^-|-$)/g, '');
 }
 
-router.get('/blog/:slug', (req, res) => {
-  const post = db
+router.get('/blog/:slug', async (req, res) => {
+  const post = await db
     .prepare('SELECT * FROM blog_posts WHERE slug = ? AND is_published = 1')
     .get(req.params.slug);
   if (!post) return res.status(404).json({ error: 'Article not found.' });
   res.json(post);
 });
 
-router.get('/admin/blog', requireAuth, (_req, res) => {
-  res.json(db.prepare('SELECT * FROM blog_posts ORDER BY created_at DESC').all());
+router.get('/admin/blog', requireAuth, async (_req, res) => {
+  res.json(await db.prepare('SELECT * FROM blog_posts ORDER BY created_at DESC').all());
 });
 
 router.post(
@@ -31,11 +31,11 @@ router.post(
   requireAuth,
   [body('title').isString().trim().notEmpty()],
   validate,
-  (req, res) => {
+  async (req, res) => {
     const { title, excerpt = '', content = '', coverImageKey = '', isPublished = 0 } = req.body;
     const slug = req.body.slug ? slugify(req.body.slug) : slugify(title);
     const publishedAt = isPublished ? new Date().toISOString() : null;
-    const info = db
+    const info = await db
       .prepare(
         'INSERT INTO blog_posts (title, slug, excerpt, content, cover_image_key, is_published, published_at) VALUES (?, ?, ?, ?, ?, ?, ?)'
       )
@@ -49,23 +49,23 @@ router.put(
   requireAuth,
   [body('title').isString().trim().notEmpty()],
   validate,
-  (req, res) => {
-    const existing = db.prepare('SELECT * FROM blog_posts WHERE id = ?').get(req.params.id);
+  async (req, res) => {
+    const existing = await db.prepare('SELECT * FROM blog_posts WHERE id = ?').get(req.params.id);
     if (!existing) return res.status(404).json({ error: 'Not found.' });
 
     const { title, excerpt = '', content = '', coverImageKey = '', isPublished = 0 } = req.body;
     const slug = req.body.slug ? slugify(req.body.slug) : existing.slug;
     const publishedAt = isPublished && !existing.published_at ? new Date().toISOString() : existing.published_at;
 
-    db.prepare(
+    await db.prepare(
       `UPDATE blog_posts SET title=?, slug=?, excerpt=?, content=?, cover_image_key=?, is_published=?, published_at=?, updated_at=datetime('now') WHERE id=?`
     ).run(title, slug, excerpt, content, coverImageKey, isPublished ? 1 : 0, publishedAt, req.params.id);
     res.json({ success: true });
   }
 );
 
-router.delete('/admin/blog/:id', requireAuth, (req, res) => {
-  db.prepare('DELETE FROM blog_posts WHERE id = ?').run(req.params.id);
+router.delete('/admin/blog/:id', requireAuth, async (req, res) => {
+  await db.prepare('DELETE FROM blog_posts WHERE id = ?').run(req.params.id);
   res.json({ success: true });
 });
 

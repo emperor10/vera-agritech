@@ -7,8 +7,8 @@ const { validate } = require('../middleware/validate');
 
 const router = express.Router();
 
-router.get('/admin/settings', requireAuth, (_req, res) => {
-  const row = db.prepare('SELECT value FROM settings WHERE key = ?').get('site');
+router.get('/admin/settings', requireAuth, async (_req, res) => {
+  const row = await db.prepare('SELECT value FROM settings WHERE key = ?').get('site');
   res.json(safeJsonParse(row?.value, {}));
 });
 
@@ -17,13 +17,13 @@ router.put(
   requireAuth,
   [body().custom((v) => typeof v === 'object' && v !== null)],
   validate,
-  (req, res) => {
+  async (req, res) => {
     const value = JSON.stringify(req.body);
-    const existing = db.prepare('SELECT key FROM settings WHERE key = ?').get('site');
+    const existing = await db.prepare('SELECT key FROM settings WHERE key = ?').get('site');
     if (existing) {
-      db.prepare('UPDATE settings SET value = ? WHERE key = ?').run(value, 'site');
+      await db.prepare('UPDATE settings SET value = ? WHERE key = ?').run(value, 'site');
     } else {
-      db.prepare('INSERT INTO settings (key, value) VALUES (?, ?)').run('site', value);
+      await db.prepare('INSERT INTO settings (key, value) VALUES (?, ?)').run('site', value);
     }
     res.json({ success: true });
   }

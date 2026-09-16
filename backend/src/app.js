@@ -3,7 +3,6 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const compression = require('compression');
-const path = require('path');
 const env = require('./config/env');
 const { apiLimiter } = require('./middleware/rateLimiters');
 
@@ -42,7 +41,10 @@ app.use(express.json({ limit: '2mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan(env.nodeEnv === 'production' ? 'combined' : 'dev'));
 
-// Static file serving for uploaded media (admin-uploaded images/photos).
+// Only relevant when IMAGE_STORAGE=local (e.g. HostAfrica, which has real
+// persistent disk) — serves admin-uploaded images straight from disk. When
+// IMAGE_STORAGE=cloudinary this folder is unused and the route just 404s,
+// which is harmless.
 app.use('/uploads', express.static(env.uploadsDir, { maxAge: '7d' }));
 
 app.use('/api', apiLimiter, healthRoutes);

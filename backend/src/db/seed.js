@@ -1,20 +1,19 @@
 const bcrypt = require('bcryptjs');
 const db = require('./index');
+const migrate = require('./migrate');
 const env = require('../config/env');
 const content = require('../seed/content.json');
 
-require('./migrate');
-
 const now = () => new Date().toISOString();
 
-function seedAdmin() {
-  const existing = db.prepare('SELECT id FROM admins WHERE email = ?').get(env.defaultAdmin.email);
+async function seedAdmin() {
+  const existing = await db.prepare('SELECT id FROM admins WHERE email = ?').get(env.defaultAdmin.email);
   if (existing) {
     console.log(`Admin already exists (${env.defaultAdmin.email}) — skipping.`);
     return;
   }
   const hash = bcrypt.hashSync(env.defaultAdmin.password, 12);
-  db.prepare('INSERT INTO admins (name, email, password_hash) VALUES (?, ?, ?)').run(
+  await db.prepare('INSERT INTO admins (name, email, password_hash) VALUES (?, ?, ?)').run(
     env.defaultAdmin.name,
     env.defaultAdmin.email,
     hash
@@ -41,127 +40,113 @@ const PAGE_KEYS = [
   'scaleUp',
 ];
 
-function seedContentBlocks() {
+async function seedContentBlocks() {
   // Only insert if not already present, so a re-run of the seed never
   // clobbers edits already made from the admin panel.
-  const insertIfMissing = db.prepare(`
-    INSERT OR IGNORE INTO content_blocks (page, value, updated_at) VALUES (?, ?, ?)
-  `);
-  const tx = db.transaction(() => {
-    for (const key of PAGE_KEYS) {
-      if (content[key] === undefined) continue;
-      insertIfMissing.run(key, JSON.stringify(content[key]), now());
-    }
-  });
-  tx();
+  const sql = 'INSERT OR IGNORE INTO content_blocks (page, value, updated_at) VALUES (?, ?, ?)';
+  const statements = PAGE_KEYS.filter((key) => content[key] !== undefined).map((key) => ({
+    sql,
+    args: [key, JSON.stringify(content[key]), now()],
+  }));
+  await db.batch(statements);
   console.log(`Seeded content_blocks for ${PAGE_KEYS.length} pages (existing rows preserved).`);
 }
 
-function seedSettings() {
-  const insertIfMissing = db.prepare('INSERT OR IGNORE INTO settings (key, value) VALUES (?, ?)');
-  insertIfMissing.run('site', JSON.stringify(content.settings || {}));
+async function seedSettings() {
+  await db.prepare('INSERT OR IGNORE INTO settings (key, value) VALUES (?, ?)').run(
+    'site',
+    JSON.stringify(content.settings || {})
+  );
   console.log('Seeded site settings.');
 }
 
-function seedFaqs() {
-  const count = db.prepare('SELECT COUNT(*) AS c FROM faqs').get().c;
+async function seedFaqs() {
+  const { c: count } = await db.prepare('SELECT COUNT(*) AS c FROM faqs').get();
   if (count > 0) {
     console.log('FAQs already seeded — skipping.');
     return;
   }
-  const insert = db.prepare(
-    'INSERT INTO faqs (question, answer, sort_order, is_published) VALUES (?, ?, ?, 1)'
-  );
-  const tx = db.transaction(() => {
-    (content.faqs || []).forEach((faq, i) => insert.run(faq.question, faq.answer, i));
-  });
-  tx();
+  const sql = 'INSERT INTO faqs (question, answer, sort_order, is_published) VALUES (?, ?, ?, 1)';
+  const statements = (content.faqs || []).map((faq, i) => ({ sql, args: [faq.question, faq.answer, i] }));
+  await db.batch(statements);
   console.log(`Seeded ${(content.faqs || []).length} FAQs.`);
 }
 
-function seedPackages() {
-  const count = db.prepare('SELECT COUNT(*) AS c FROM packages').get().c;
+async function seedPackages() {
+  const { c: count } = await db.prepare('SELECT COUNT(*) AS c FROM packages').get();
   if (count > 0) {
     console.log('Packages already seeded — skipping.');
     return;
   }
-  const insert = db.prepare(`
+  const sql = `
     INSERT INTO packages (name, area, best_for, cost_range, turnover_range, includes_json, popular, sort_order, is_published)
     VALUES (@name, @area, @bestFor, @costRange, @turnoverRange, @includesJson, @popular, @sortOrder, 1)
-  `);
-  const tx = db.transaction(() => {
-    (content.packages || []).forEach((pkg, i) => {
-      insert.run({
-        name: pkg.name,
-        area: pkg.area,
-        bestFor: pkg.bestFor,
-        costRange: pkg.costRange,
-        turnoverRange: pkg.turnoverRange,
-        includesJson: JSON.stringify(pkg.includes || []),
-        popular: pkg.popular ? 1 : 0,
-        sortOrder: pkg.order ?? i,
-      });
-    });
-  });
-  tx();
+  `;
+  const statements = (content.packages || []).map((pkg, i) => ({
+    sql,
+    args: {
+      name: pkg.name,
+      area: pkg.area,
+      bestFor: pkg.bestFor,
+      costRange: pkg.costRange,
+      turnoverRange: pkg.turnoverRange,
+      includesJson: JSON.stringify(pkg.includes || []),
+      popular: pkg.popular ? 1 : 0,
+      sortOrder: pkg.order ?? i,
+    },
+  }));
+  await db.batch(statements);
   console.log(`Seeded ${(content.packages || []).length} packages.`);
 }
 
-function seedCrops() {
-  const count = db.prepare('SELECT COUNT(*) AS c FROM crops').get().c;
+async function seedCrops() {
+  const { c: count } = await db.prepare('SELECT COUNT(*) AS c FROM crops').get();
   if (count > 0) {
     console.log('Crops already seeded — skipping.');
     return;
   }
-  const insert = db.prepare(
-    'INSERT INTO crops (name, note, image_key, sort_order, is_published) VALUES (?, ?, ?, ?, 1)'
-  );
-  const tx = db.transaction(() => {
-    (content.cropsProduction?.crops || []).forEach((crop, i) => {
-      insert.run(crop.name, crop.note || '', crop.imageKey || '', i);
-    });
-  });
-  tx();
+  const sql = 'INSERT INTO crops (name, note, image_key, sort_order, is_published) VALUES (?, ?, ?, ?, 1)';
+  const statements = (content.cropsProduction?.crops || []).map((crop, i) => ({
+    sql,
+    args: [crop.name, crop.note || '', crop.imageKey || '', i],
+  }));
+  await db.batch(statements);
   console.log('Seeded crops.');
 }
 
-function seedTestimonials() {
-  const count = db.prepare('SELECT COUNT(*) AS c FROM testimonials').get().c;
+async function seedTestimonials() {
+  const { c: count } = await db.prepare('SELECT COUNT(*) AS c FROM testimonials').get();
   if (count > 0) {
     console.log('Testimonials already seeded — skipping.');
     return;
   }
-  const insert = db.prepare(
-    'INSERT INTO testimonials (name, location, quote, image_key, sort_order, is_published) VALUES (?, ?, ?, ?, ?, 1)'
-  );
-  const tx = db.transaction(() => {
-    (content.home?.testimonials || []).forEach((t, i) => {
-      insert.run(t.name, t.location, t.quote, t.imageKey || '', i);
-    });
-  });
-  tx();
+  const sql =
+    'INSERT INTO testimonials (name, location, quote, image_key, sort_order, is_published) VALUES (?, ?, ?, ?, ?, 1)';
+  const statements = (content.home?.testimonials || []).map((t, i) => ({
+    sql,
+    args: [t.name, t.location, t.quote, t.imageKey || '', i],
+  }));
+  await db.batch(statements);
   console.log('Seeded testimonials.');
 }
 
-function seedCaseStudies() {
-  const count = db.prepare('SELECT COUNT(*) AS c FROM case_studies').get().c;
+async function seedCaseStudies() {
+  const { c: count } = await db.prepare('SELECT COUNT(*) AS c FROM case_studies').get();
   if (count > 0) {
     console.log('Case studies already seeded — skipping.');
     return;
   }
-  const insert = db.prepare(
-    'INSERT INTO case_studies (title, summary, stats_json, image_key, sort_order, is_published) VALUES (?, ?, ?, ?, ?, 1)'
-  );
-  const tx = db.transaction(() => {
-    (content.projects?.caseStudies || []).forEach((cs, i) => {
-      insert.run(cs.title, cs.summary, JSON.stringify(cs.stats || []), cs.imageKey || '', i);
-    });
-  });
-  tx();
+  const sql =
+    'INSERT INTO case_studies (title, summary, stats_json, image_key, sort_order, is_published) VALUES (?, ?, ?, ?, ?, 1)';
+  const statements = (content.projects?.caseStudies || []).map((cs, i) => ({
+    sql,
+    args: [cs.title, cs.summary, JSON.stringify(cs.stats || []), cs.imageKey || '', i],
+  }));
+  await db.batch(statements);
   console.log('Seeded case studies.');
 }
 
-function seedImagePlaceholders() {
+async function seedImagePlaceholders() {
   const keys = new Set();
   const collect = (obj) => {
     if (!obj || typeof obj !== 'object') return;
@@ -181,28 +166,34 @@ function seedImagePlaceholders() {
   // references it correctly.
   ['home-hero-image', 'logo-mark', 'og-cover-image', 'greenhouse-structure'].forEach((k) => keys.add(k));
 
-  const insertIfMissing = db.prepare(
-    'INSERT OR IGNORE INTO images (key, url, alt_text, updated_at) VALUES (?, NULL, ?, ?)'
-  );
-  const tx = db.transaction(() => {
-    for (const key of keys) {
-      insertIfMissing.run(key, key.replace(/-/g, ' '), now());
-    }
-  });
-  tx();
+  const sql = 'INSERT OR IGNORE INTO images (key, url, alt_text, updated_at) VALUES (?, NULL, ?, ?)';
+  const statements = [...keys].map((key) => ({ sql, args: [key, key.replace(/-/g, ' '), now()] }));
+  await db.batch(statements);
   console.log(`Registered ${keys.size} image placeholders for the admin media library.`);
 }
 
-seedAdmin();
-seedSettings();
-seedContentBlocks();
-seedFaqs();
-seedPackages();
-seedCrops();
-seedTestimonials();
-seedCaseStudies();
-seedImagePlaceholders();
+async function main() {
+  await migrate();
+  await seedAdmin();
+  await seedSettings();
+  await seedContentBlocks();
+  await seedFaqs();
+  await seedPackages();
+  await seedCrops();
+  await seedTestimonials();
+  await seedCaseStudies();
+  await seedImagePlaceholders();
 
-console.log('\nSeed complete.');
-console.log(`Login at the admin panel with: ${env.defaultAdmin.email}`);
-console.log('Remember to change this password immediately after first login.');
+  console.log('\nSeed complete.');
+  console.log(`Login at the admin panel with: ${env.defaultAdmin.email}`);
+  console.log('Remember to change this password immediately after first login.');
+}
+
+if (require.main === module) {
+  main().catch((err) => {
+    console.error('Seed failed:', err);
+    process.exit(1);
+  });
+}
+
+module.exports = main;

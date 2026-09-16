@@ -3,17 +3,19 @@
 This project has two parts that deploy separately:
 
 - **`frontend/`** — a static React/Vite Single Page Application (SPA). Once built (`npm run build`), it is a folder of plain HTML/CSS/JS with no server required. It is uploaded to `public_html`.
-- **`backend/`** — a small Node.js/Express API with a SQLite database. It powers the admin panel, the media library, and the Contact/Get Started forms. It runs as a **cPanel "Setup Node.js App"** application, which is available on HostAfrica's shared hosting plans.
+- **`backend/`** — a small Node.js/Express API with a SQLite database. It powers the admin panel, the media library, and the Contact/Get Started forms. It runs as a Node.js app inside your hosting control panel, which is available on HostAfrica's shared hosting plans.
 
-If your HostAfrica plan does not include Node.js app support, contact HostAfrica support to confirm which plan/tier enables "Setup Node.js App" in cPanel — it is required for the admin/CMS/leads functionality in this build. The public marketing pages will still work with the built-in static fallback content even without the backend (see "How the site behaves without the backend" below), but the admin panel, live content edits, and form submissions require it.
+> **Which control panel do you have — cPanel or DirectAdmin?** HostAfrica's current shared hosting plans use **DirectAdmin**, not cPanel — check the login screen for your hosting account to see which one you actually have (older/legacy HostAfrica accounts may still be on cPanel). The steps below use cPanel's "Setup Node.js App" naming since that's what this project was originally written against; if you're on DirectAdmin, look for its equivalent **Node.js Selector / Node.js App Manager** tool instead — the underlying steps (create app, set the startup file, set environment variables, run npm install) are the same, just under different menu labels. Ask HostAfrica support if you can't find it.
+
+If your HostAfrica plan does not include Node.js app support, contact HostAfrica support to confirm which plan/tier enables it — it is required for the admin/CMS/leads functionality in this build. The public marketing pages will still work with the built-in static fallback content even without the backend (see "How the site behaves without the backend" below), but the admin panel, live content edits, and form submissions require it.
 
 ## 1. Prerequisites on HostAfrica
 
-1. A cPanel account with:
+1. A hosting account with:
    - **File Manager** or FTP access
-   - **Setup Node.js App** (under the "Software" section of cPanel)
+   - A Node.js app tool (cPanel's "Setup Node.js App", or DirectAdmin's "Node.js Selector" — see the note above)
    - A domain or subdomain pointed at the account (e.g. `veraagritech.com`)
-2. Node.js 18+ available in the Node.js App selector (select the newest LTS offered).
+2. Node.js 18+ available in the Node.js app selector (select the newest LTS offered).
 
 ## 2. Deploy the backend (API + admin + CMS)
 
@@ -28,17 +30,20 @@ If your HostAfrica plan does not include Node.js app support, contact HostAfrica
 
 3. **Set environment variables.** Copy `.env.example` to `.env` inside the application root (via File Manager or a terminal if your plan includes SSH access), and fill in real values:
    ```
-   PORT=<the port cPanel assigns you>
+   PORT=<the port your control panel assigns you>
    NODE_ENV=production
    APP_URL=https://api.veraagritech.com
    CORS_ORIGIN=https://veraagritech.com
    JWT_SECRET=<generate a long random string>
    DEFAULT_ADMIN_EMAIL=<a real admin email>
    DEFAULT_ADMIN_PASSWORD=<a strong temporary password>
-   DATABASE_FILE=/home/<cpanel-user>/vera-backend/data/vera.sqlite3
+   DATABASE_URL=file:/home/<cpanel-user>/vera-backend/data/vera.sqlite3
+   IMAGE_STORAGE=local
    UPLOADS_DIR=/home/<cpanel-user>/vera-backend/uploads
    ```
-   cPanel's Node.js App interface has its own "Environment Variables" section — prefer entering them there over a plain `.env` file if available, since it keeps secrets out of the file system.
+   HostAfrica has real persistent disk storage (unlike free-tier hosts such as Render), so `DATABASE_URL` can safely point at a local file and `IMAGE_STORAGE` can stay `local` — both survive restarts and redeploys here. (If you ever move this same codebase to a host with no persistent disk, swap in Turso and Cloudinary instead — see `docs/DEPLOYMENT_RENDER_FREE.md` for that variant.)
+
+   Your control panel's Node.js App interface has its own "Environment Variables" section — prefer entering them there over a plain `.env` file if available, since it keeps secrets out of the file system.
 
 4. **Install dependencies and initialise the database.** cPanel's Node.js App page gives you a "Run NPM Install" button, or a terminal command it shows you (e.g. `source /home/<user>/nodevenv/vera-backend/18/bin/activate && cd /home/<user>/vera-backend`). From that shell:
    ```
@@ -50,7 +55,7 @@ If your HostAfrica plan does not include Node.js app support, contact HostAfrica
 
 6. **Change the default admin password immediately.** Log in to `/admin/login` on the live frontend once deployed, using the `DEFAULT_ADMIN_EMAIL`/`DEFAULT_ADMIN_PASSWORD` you set, then use the admin panel to change it (Settings will get a "change password" control in a future iteration — until then, use the `POST /api/auth/change-password` endpoint or ask your developer to rotate it directly in the database).
 
-7. **Back up the SQLite file regularly.** `DATABASE_FILE` and `UPLOADS_DIR` are the only stateful data in this system (all leads, applications, page content edits, and uploaded photos live there). Set up a cron job in cPanel to copy these to a backup location weekly at minimum — HostAfrica's cPanel includes a Backup Wizard that can be scheduled to include arbitrary home directory paths.
+7. **Back up the SQLite file regularly.** The `DATABASE_URL` file path and `UPLOADS_DIR` are the only stateful data in this system (all leads, applications, page content edits, and uploaded photos live there). Set up a scheduled backup (a cron job, or your control panel's built-in backup tool) to copy these to a backup location weekly at minimum.
 
 ## 3. Deploy the frontend (public website)
 

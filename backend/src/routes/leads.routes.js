@@ -22,30 +22,30 @@ router.post(
     body('company_website').optional().isString().isLength({ max: 0 }).withMessage('Spam detected.'),
   ],
   validate,
-  (req, res) => {
+  async (req, res) => {
     const { name, email, phone = '', message = '', interest = '', sourcePage = '' } = req.body;
-    db.prepare(
+    await db.prepare(
       'INSERT INTO leads (name, email, phone, message, source_page, interest) VALUES (?, ?, ?, ?, ?, ?)'
     ).run(name, email, phone, message, sourcePage, interest);
     res.status(201).json({ success: true, message: 'Thank you — the Vera AgriTech team will be in touch shortly.' });
   }
 );
 
-router.get('/admin/leads', requireAuth, (req, res) => {
+router.get('/admin/leads', requireAuth, async (req, res) => {
   const status = req.query.status;
   const rows = status
-    ? db.prepare('SELECT * FROM leads WHERE status = ? ORDER BY created_at DESC').all(status)
-    : db.prepare('SELECT * FROM leads ORDER BY created_at DESC').all();
+    ? await db.prepare('SELECT * FROM leads WHERE status = ? ORDER BY created_at DESC').all(status)
+    : await db.prepare('SELECT * FROM leads ORDER BY created_at DESC').all();
   res.json(rows);
 });
 
-router.patch('/admin/leads/:id', requireAuth, [body('status').isString().notEmpty()], validate, (req, res) => {
-  db.prepare('UPDATE leads SET status = ? WHERE id = ?').run(req.body.status, req.params.id);
+router.patch('/admin/leads/:id', requireAuth, [body('status').isString().notEmpty()], validate, async (req, res) => {
+  await db.prepare('UPDATE leads SET status = ? WHERE id = ?').run(req.body.status, req.params.id);
   res.json({ success: true });
 });
 
-router.delete('/admin/leads/:id', requireAuth, (req, res) => {
-  db.prepare('DELETE FROM leads WHERE id = ?').run(req.params.id);
+router.delete('/admin/leads/:id', requireAuth, async (req, res) => {
+  await db.prepare('DELETE FROM leads WHERE id = ?').run(req.params.id);
   res.json({ success: true });
 });
 

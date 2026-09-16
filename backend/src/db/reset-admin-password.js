@@ -1,5 +1,5 @@
 /**
- * Directly resets (or creates) an admin account's password in the local
+ * Directly resets (or creates) an admin account's password in the
  * database — a safety valve for when the admin login password stops
  * working and it's unclear why (forgotten a password set via the admin
  * panel's "Change Password" feature, or a mismatch between what's in
@@ -19,39 +19,46 @@
  *   npm run db:reset-admin-password -- <email> <newPassword>
  *
  * Safe to run any time the server is stopped or running — it writes
- * directly to the SQLite file.
+ * directly to the database.
  */
 const bcrypt = require('bcryptjs');
 const db = require('./index');
 const env = require('../config/env');
 
-const [, , emailArg, newPassword] = process.argv;
-const email = (emailArg || env.defaultAdmin.email).toLowerCase();
+async function main() {
+  const [, , emailArg, newPassword] = process.argv;
+  const email = (emailArg || env.defaultAdmin.email).toLowerCase();
 
-if (!newPassword) {
-  console.error('Usage: node src/db/reset-admin-password.js <email> <newPassword>');
-  console.error(`Example: node src/db/reset-admin-password.js ${env.defaultAdmin.email} MyNewPassword123`);
+  if (!newPassword) {
+    console.error('Usage: node src/db/reset-admin-password.js <email> <newPassword>');
+    console.error(`Example: node src/db/reset-admin-password.js ${env.defaultAdmin.email} MyNewPassword123`);
+    process.exit(1);
+  }
+
+  if (newPassword.length < 8) {
+    console.error('Password must be at least 8 characters.');
+    process.exit(1);
+  }
+
+  const hash = bcrypt.hashSync(newPassword, 12);
+  const existing = await db.prepare('SELECT id FROM admins WHERE email = ?').get(email);
+
+  if (existing) {
+    await db.prepare('UPDATE admins SET password_hash = ? WHERE email = ?').run(hash, email);
+    console.log(`Password reset for existing admin: ${email}`);
+  } else {
+    await db.prepare('INSERT INTO admins (name, email, password_hash) VALUES (?, ?, ?)').run(
+      env.defaultAdmin.name,
+      email,
+      hash
+    );
+    console.log(`No admin existed for ${email} — created a new admin account with the given password.`);
+  }
+
+  console.log('You can log in immediately with the new password — no server restart needed.');
+}
+
+main().catch((err) => {
+  console.error('Failed to reset admin password:', err);
   process.exit(1);
-}
-
-if (newPassword.length < 8) {
-  console.error('Password must be at least 8 characters.');
-  process.exit(1);
-}
-
-const hash = bcrypt.hashSync(newPassword, 12);
-const existing = db.prepare('SELECT id FROM admins WHERE email = ?').get(email);
-
-if (existing) {
-  db.prepare('UPDATE admins SET password_hash = ? WHERE email = ?').run(hash, email);
-  console.log(`Password reset for existing admin: ${email}`);
-} else {
-  db.prepare('INSERT INTO admins (name, email, password_hash) VALUES (?, ?, ?)').run(
-    env.defaultAdmin.name,
-    email,
-    hash
-  );
-  console.log(`No admin existed for ${email} — created a new admin account with the given password.`);
-}
-
-console.log('You can log in immediately with the new password — no server restart needed.');
+});

@@ -22,7 +22,7 @@ router.post(
     body('company_website').optional().isString().isLength({ max: 0 }).withMessage('Spam detected.'),
   ],
   validate,
-  (req, res) => {
+  async (req, res) => {
     const {
       name,
       email,
@@ -32,7 +32,7 @@ router.post(
       financingInterest = '',
       message = '',
     } = req.body;
-    db.prepare(
+    await db.prepare(
       'INSERT INTO applications (name, email, phone, location, package_interest, financing_interest, message) VALUES (?, ?, ?, ?, ?, ?, ?)'
     ).run(name, email, phone, location, packageInterest, financingInterest, message);
     res.status(201).json({
@@ -42,21 +42,21 @@ router.post(
   }
 );
 
-router.get('/admin/applications', requireAuth, (req, res) => {
+router.get('/admin/applications', requireAuth, async (req, res) => {
   const status = req.query.status;
   const rows = status
-    ? db.prepare('SELECT * FROM applications WHERE status = ? ORDER BY created_at DESC').all(status)
-    : db.prepare('SELECT * FROM applications ORDER BY created_at DESC').all();
+    ? await db.prepare('SELECT * FROM applications WHERE status = ? ORDER BY created_at DESC').all(status)
+    : await db.prepare('SELECT * FROM applications ORDER BY created_at DESC').all();
   res.json(rows);
 });
 
-router.patch('/admin/applications/:id', requireAuth, [body('status').isString().notEmpty()], validate, (req, res) => {
-  db.prepare('UPDATE applications SET status = ? WHERE id = ?').run(req.body.status, req.params.id);
+router.patch('/admin/applications/:id', requireAuth, [body('status').isString().notEmpty()], validate, async (req, res) => {
+  await db.prepare('UPDATE applications SET status = ? WHERE id = ?').run(req.body.status, req.params.id);
   res.json({ success: true });
 });
 
-router.delete('/admin/applications/:id', requireAuth, (req, res) => {
-  db.prepare('DELETE FROM applications WHERE id = ?').run(req.params.id);
+router.delete('/admin/applications/:id', requireAuth, async (req, res) => {
+  await db.prepare('DELETE FROM applications WHERE id = ?').run(req.params.id);
   res.json({ success: true });
 });
 

@@ -18,9 +18,9 @@ router.post(
     body('password').isString().isLength({ min: 1 }).withMessage('Password is required.'),
   ],
   validate,
-  (req, res) => {
+  async (req, res) => {
     const { email, password } = req.body;
-    const admin = db.prepare('SELECT * FROM admins WHERE email = ?').get(email.toLowerCase());
+    const admin = await db.prepare('SELECT * FROM admins WHERE email = ?').get(email.toLowerCase());
 
     if (!admin || !bcrypt.compareSync(password, admin.password_hash)) {
       return res.status(401).json({ error: 'Invalid email or password.' });
@@ -32,7 +32,7 @@ router.post(
       { expiresIn: env.jwtExpiresIn }
     );
 
-    db.prepare('UPDATE admins SET last_login_at = datetime(\'now\') WHERE id = ?').run(admin.id);
+    await db.prepare('UPDATE admins SET last_login_at = datetime(\'now\') WHERE id = ?').run(admin.id);
 
     return res.json({
       token,
@@ -41,8 +41,8 @@ router.post(
   }
 );
 
-router.get('/me', requireAuth, (req, res) => {
-  const admin = db.prepare('SELECT id, name, email, last_login_at FROM admins WHERE id = ?').get(req.admin.sub);
+router.get('/me', requireAuth, async (req, res) => {
+  const admin = await db.prepare('SELECT id, name, email, last_login_at FROM admins WHERE id = ?').get(req.admin.sub);
   if (!admin) return res.status(404).json({ error: 'Admin not found.' });
   return res.json(admin);
 });
@@ -55,8 +55,8 @@ router.post(
     body('newPassword').isString().isLength({ min: 8 }).withMessage('New password must be at least 8 characters.'),
   ],
   validate,
-  (req, res) => {
-    const admin = db.prepare('SELECT * FROM admins WHERE id = ?').get(req.admin.sub);
+  async (req, res) => {
+    const admin = await db.prepare('SELECT * FROM admins WHERE id = ?').get(req.admin.sub);
     if (!admin) return res.status(404).json({ error: 'Admin not found.' });
 
     if (!bcrypt.compareSync(req.body.currentPassword, admin.password_hash)) {
@@ -64,7 +64,7 @@ router.post(
     }
 
     const hash = bcrypt.hashSync(req.body.newPassword, 12);
-    db.prepare('UPDATE admins SET password_hash = ? WHERE id = ?').run(hash, admin.id);
+    await db.prepare('UPDATE admins SET password_hash = ? WHERE id = ?').run(hash, admin.id);
     return res.json({ success: true });
   }
 );

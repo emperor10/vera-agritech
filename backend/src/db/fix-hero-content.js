@@ -22,21 +22,28 @@
 const db = require('./index');
 const content = require('../seed/content.json');
 
-const row = db.prepare('SELECT value FROM content_blocks WHERE page = ?').get('home');
+async function main() {
+  const row = await db.prepare('SELECT value FROM content_blocks WHERE page = ?').get('home');
 
-if (!row) {
-  console.error('No "home" content_blocks row found. Run `npm run setup` first, then re-run this script.');
-  process.exit(1);
+  if (!row) {
+    console.error('No "home" content_blocks row found. Run `npm run setup` first, then re-run this script.');
+    process.exit(1);
+  }
+
+  const current = JSON.parse(row.value);
+  current.hero = content.home.hero;
+
+  await db.prepare('UPDATE content_blocks SET value = ?, updated_at = ? WHERE page = ?').run(
+    JSON.stringify(current),
+    new Date().toISOString(),
+    'home'
+  );
+
+  console.log('Updated the "home" page\'s hero section to the new carousel format (heading, CTAs, slides).');
+  console.log('Every other section of the home page was left untouched.');
 }
 
-const current = JSON.parse(row.value);
-current.hero = content.home.hero;
-
-db.prepare('UPDATE content_blocks SET value = ?, updated_at = ? WHERE page = ?').run(
-  JSON.stringify(current),
-  new Date().toISOString(),
-  'home'
-);
-
-console.log('Updated the "home" page\'s hero section to the new carousel format (heading, CTAs, slides).');
-console.log('Every other section of the home page was left untouched.');
+main().catch((err) => {
+  console.error('Failed to update hero content:', err);
+  process.exit(1);
+});
