@@ -69,6 +69,18 @@ export interface CaseStudy {
   imageKey: string;
 }
 
+export interface Product {
+  id: number;
+  category: 'vegetable' | 'equipment';
+  name: string;
+  description: string;
+  price: string;
+  unit: string;
+  specs: string[];
+  imageKey: string;
+  sortOrder: number;
+}
+
 export interface BlogPostSummary {
   id: number;
   title: string;
@@ -87,5 +99,6 @@ export interface ContentBundle {
   testimonials: Testimonial[];
   caseStudies: CaseStudy[];
   blogPosts: BlogPostSummary[];
+  products: Product[];
   images: Record<string, ImageAsset>;
 }

@@ -54,6 +54,9 @@ export default function AdminLayout() {
           <NavLink to="/admin/crops" className={navItemClass}>
             Crops
           </NavLink>
+          <NavLink to="/admin/products" className={navItemClass}>
+            Products
+          </NavLink>
           <NavLink to="/admin/testimonials" className={navItemClass}>
             Testimonials
           </NavLink>

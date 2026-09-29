@@ -61,6 +61,13 @@ router.get('/', async (_req, res) => {
       "SELECT id, title, slug, excerpt, cover_image_key AS coverImageKey, published_at AS publishedAt FROM blog_posts WHERE is_published = 1 ORDER BY published_at DESC"
     )
     .all();
+  const products = (
+    await db
+      .prepare(
+        'SELECT id, category, name, description, price, unit, specs_json, image_key AS imageKey, sort_order AS sortOrder FROM products WHERE is_published = 1 ORDER BY category ASC, sort_order ASC'
+      )
+      .all()
+  ).map((p) => ({ ...p, specs: safeJsonParse(p.specs_json, []), specs_json: undefined }));
 
   res.json({
     pages,
@@ -71,6 +78,7 @@ router.get('/', async (_req, res) => {
     testimonials,
     caseStudies,
     blogPosts,
+    products,
     images: await loadImages(),
   });
 });

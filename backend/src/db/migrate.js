@@ -126,6 +126,21 @@ const SCHEMA_SQL = `
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
   );
 
+  CREATE TABLE IF NOT EXISTS products (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    category TEXT NOT NULL DEFAULT 'vegetable',
+    name TEXT NOT NULL,
+    description TEXT,
+    price TEXT,
+    unit TEXT NOT NULL DEFAULT 'kg',
+    specs_json TEXT NOT NULL DEFAULT '[]',
+    image_key TEXT,
+    sort_order INTEGER NOT NULL DEFAULT 0,
+    is_published INTEGER NOT NULL DEFAULT 1,
+    created_at TEXT NOT NULL DEFAULT (datetime('now')),
+    updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+  );
+
   CREATE TABLE IF NOT EXISTS settings (
     key TEXT PRIMARY KEY,
     value TEXT NOT NULL

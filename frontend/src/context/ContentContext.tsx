@@ -38,6 +38,10 @@ function buildFallback(): ContentBundle {
     testimonials: (raw.home?.testimonials || []).map((t: any, i: number) => ({ id: i + 1, ...t })),
     caseStudies: (raw.projects?.caseStudies || []).map((c: any, i: number) => ({ id: i + 1, ...c })),
     blogPosts: [],
+    // No static seed data for products — the catalogue is built entirely
+    // from the admin panel (Admin → Products), so the fallback starts
+    // empty rather than showing invented placeholder items.
+    products: [],
     images: {},
   };
 }

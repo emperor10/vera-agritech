@@ -7,6 +7,7 @@ import TheVeraModel from './pages/TheVeraModel';
 import Greenhouses from './pages/Greenhouses';
 import HowItWorks from './pages/HowItWorks';
 import CropsProduction from './pages/CropsProduction';
+import Products from './pages/Products';
 import Financing from './pages/Financing';
 import MarketAccess from './pages/MarketAccess';
 import TrainingSupport from './pages/TrainingSupport';
@@ -35,6 +36,7 @@ const AdminApplications = lazy(() => import('./pages/admin/AdminApplications'));
 const AdminFaqs = lazy(() => import('./pages/admin/AdminFaqs'));
 const AdminPackages = lazy(() => import('./pages/admin/AdminPackages'));
 const AdminCrops = lazy(() => import('./pages/admin/AdminCrops'));
+const AdminProducts = lazy(() => import('./pages/admin/AdminProducts'));
 const AdminTestimonials = lazy(() => import('./pages/admin/AdminTestimonials'));
 const AdminCaseStudies = lazy(() => import('./pages/admin/AdminCaseStudies'));
 const AdminBlog = lazy(() => import('./pages/admin/AdminBlog'));
@@ -54,6 +56,7 @@ export default function App() {
         <Route path="solutions/greenhouses" element={<Greenhouses />} />
         <Route path="solutions/how-it-works" element={<HowItWorks />} />
         <Route path="solutions/crops-and-production" element={<CropsProduction />} />
+        <Route path="products" element={<Products />} />
         <Route path="financing" element={<Financing />} />
         <Route path="solutions/market-access" element={<MarketAccess />} />
         <Route path="training-support" element={<TrainingSupport />} />
@@ -97,6 +100,7 @@ export default function App() {
         <Route path="faqs" element={<AdminFaqs />} />
         <Route path="packages" element={<AdminPackages />} />
         <Route path="crops" element={<AdminCrops />} />
+        <Route path="products" element={<AdminProducts />} />
         <Route path="testimonials" element={<AdminTestimonials />} />
         <Route path="case-studies" element={<AdminCaseStudies />} />
         <Route path="blog" element={<AdminBlog />} />
