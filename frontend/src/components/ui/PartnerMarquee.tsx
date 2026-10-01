@@ -12,7 +12,7 @@ function PartnerLogo({ partner }: { partner: Partner }) {
   const image = getImage(partner.imageKey, partner.name);
 
   const card = (
-    <div className="flex h-20 w-36 shrink-0 items-center justify-center rounded-2xl bg-white p-4 shadow-sm sm:h-24 sm:w-44">
+    <div className="flex h-20 w-36 shrink-0 items-center justify-center rounded-2xl border border-ink-100 bg-white p-4 shadow-card sm:h-24 sm:w-44">
       {image.url ? (
         <img
           src={image.url}

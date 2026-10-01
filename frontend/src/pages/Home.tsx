@@ -73,13 +73,10 @@ export default function Home() {
           hover. Hidden entirely until at least one partner is published, so
           the homepage never shows an empty section. */}
       {content.partners.length > 0 && (
-        <section className="section-py bg-brand-600">
+        <section className="section-py">
           <div className="container-page">
             <Reveal>
-              <div className="mx-auto max-w-2xl text-center">
-                <p className="text-sm font-semibold uppercase tracking-[0.14em] text-brand-100">Trusted By</p>
-                <h2 className="mt-2 text-3xl text-white sm:text-4xl">We Work With Multiple Partners</h2>
-              </div>
+              <SectionHeading heading="Trusted By Multiple Partners" center />
             </Reveal>
             <div className="mt-10">
               <PartnerMarquee partners={content.partners} />
