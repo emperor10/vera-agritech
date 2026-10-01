@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useContent, usePage } from '../context/ContentContext';
 import { Seo } from '../components/ui/Seo';
-import { PlaceholderImage } from '../components/ui/PlaceholderImage';
 import { SectionHeading, StatCard, CtaBanner } from '../components/ui/Bits';
 import { TestimonialCard } from '../components/ui/TestimonialCard';
 import { HeroCarousel } from '../components/ui/HeroCarousel';
+import { PartnerMarquee } from '../components/ui/PartnerMarquee';
 import { Reveal } from '../components/ui/Reveal';
 
 const STAT_ICONS = [
@@ -68,37 +68,21 @@ export default function Home() {
         </Reveal>
       </div>
 
-      {/* Our Partners — admin-managed brand logos (Admin → Partners). Hidden
-          entirely until at least one partner is published, so the homepage
-          never shows an empty row of placeholder boxes. */}
+      {/* Our Partners — admin-managed brand logos (Admin → Partners),
+          scrolling in a continuous right-to-left marquee that pauses on
+          hover. Hidden entirely until at least one partner is published, so
+          the homepage never shows an empty section. */}
       {content.partners.length > 0 && (
-        <section className="section-py">
+        <section className="section-py bg-brand-600">
           <div className="container-page">
             <Reveal>
-              <SectionHeading eyebrow="Trusted By" heading="Our Partners" center />
+              <div className="mx-auto max-w-2xl text-center">
+                <p className="text-sm font-semibold uppercase tracking-[0.14em] text-brand-100">Trusted By</p>
+                <h2 className="mt-2 text-3xl text-white sm:text-4xl">We Work With Multiple Partners</h2>
+              </div>
             </Reveal>
-            <div className="mt-10 grid grid-cols-2 items-center gap-8 sm:grid-cols-3 lg:grid-cols-5">
-              {content.partners.map((partner, i) => {
-                const logo = (
-                  <PlaceholderImage
-                    imageKey={partner.imageKey}
-                    alt={partner.name}
-                    ratio="aspect-[3/2]"
-                    className="grayscale transition-all duration-300 hover:grayscale-0"
-                  />
-                );
-                return (
-                  <Reveal key={partner.id} delay={i * 60}>
-                    {partner.websiteUrl ? (
-                      <a href={partner.websiteUrl} target="_blank" rel="noreferrer" aria-label={partner.name}>
-                        {logo}
-                      </a>
-                    ) : (
-                      logo
-                    )}
-                  </Reveal>
-                );
-              })}
+            <div className="mt-10">
+              <PartnerMarquee partners={content.partners} />
             </div>
           </div>
         </section>

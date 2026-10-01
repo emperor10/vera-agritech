@@ -64,6 +64,14 @@
   to { opacity: 1; translate: 0 0; }
 }
 
+/* Our Partners marquee (see PartnerMarquee.tsx): the track lays out two
+   identical "laps" of logos back to back and scrolls exactly -50% of its
+   own width — one lap's width — so it loops with no visible seam or jump. */
+@keyframes partner-marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 .animate-fade-up {
   animation: fade-up-in 0.7s ease-out both;
 }
@@ -266,5 +274,30 @@
   .stat-figure {
     font-family: var(--font-display);
     @apply font-bold text-brand-950;
+  }
+
+  /* Our Partners marquee wrapper: clips the track to one row and fades its
+     left/right edges so logos entering/leaving the viewport don't just
+     hard-cut at the container boundary. */
+  .partner-marquee {
+    @apply overflow-hidden;
+    mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  }
+
+  /* w-max so the track is exactly as wide as its (doubled) content, never
+     wrapping — the -50% keyframe above depends on that width being the sum
+     of both laps. Paused on hover/focus so a visitor can read or click a
+     logo instead of chasing a moving target. */
+  .partner-marquee-track {
+    @apply flex w-max items-center gap-6 sm:gap-8;
+    animation-name: partner-marquee-scroll;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  .partner-marquee:hover .partner-marquee-track,
+  .partner-marquee:focus-within .partner-marquee-track {
+    animation-play-state: paused;
   }
 }
