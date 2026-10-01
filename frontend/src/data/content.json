@@ -119,17 +119,6 @@
         { "title": "Agribusiness Consulting", "description": "Expert feasibility audits, farm layout mapping, agricultural investment planning, and crop productivity advisory for large-scale operations.", "path": "/consulting" }
       ]
     },
-    "founderPreview": {
-      "eyebrow": "Leadership",
-      "heading": "Meet the Founder",
-      "name": "Dr. Nurudeen S. Lawal",
-      "bio": "An agripreneur and agricultural engineer on a mission to strengthen Africa's food systems. With expertise in irrigation engineering, soil and water conservation, and soilless crop nutrition, he founded Vera AgriTech to commercialise tropical-adapted screen houses and hydroponic systems.",
-      "credentials": "COREN-registered engineer with 20+ years experience; Ph.D. in Agricultural and Environmental Engineering from University of Ibadan",
-      "imageKey": "founder-photo",
-      "imageAlt": "Dr. Nurudeen S. Lawal, Founder of Vera AgriTech",
-      "sdgAlignment": ["SDG 2 – Zero Hunger", "SDG 13 – Climate Action", "SDG 15 – Life on Land"],
-      "collaborators": ["IFAD", "SMEDAN", "Sterling Bank", "Rex Insurance"]
-    },
     "testimonials": [
       { "name": "Chinedu Okafor", "location": "Abuja", "quote": "Living in Abuja, I was deeply worried about food security and the safety of traditional farming due to rural banditry. Vera AgriTech's urban screen house model allowed me to start a thriving, pest-free tomato farm right in my backyard where I feel completely safe.", "imageKey": "testimonial-chinedu" },
       { "name": "Amina Bello", "location": "Kano", "quote": "The traceability and quality of my produce means I can supply supermarket clients directly and earn a premium price for it.", "imageKey": "testimonial-amina" },

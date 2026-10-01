@@ -48,6 +48,14 @@ export interface Crop {
   imageKey: string;
 }
 
+export interface Partner {
+  id: number;
+  name: string;
+  imageKey: string;
+  websiteUrl: string;
+  sortOrder: number;
+}
+
 export interface Testimonial {
   id: number;
   name: string;
@@ -96,6 +104,7 @@ export interface ContentBundle {
   faqs: Faq[];
   packages: Package[];
   crops: Crop[];
+  partners: Partner[];
   testimonials: Testimonial[];
   caseStudies: CaseStudy[];
   blogPosts: BlogPostSummary[];

@@ -68,6 +68,42 @@ export default function Home() {
         </Reveal>
       </div>
 
+      {/* Our Partners — admin-managed brand logos (Admin → Partners). Hidden
+          entirely until at least one partner is published, so the homepage
+          never shows an empty row of placeholder boxes. */}
+      {content.partners.length > 0 && (
+        <section className="section-py">
+          <div className="container-page">
+            <Reveal>
+              <SectionHeading eyebrow="Trusted By" heading="Our Partners" center />
+            </Reveal>
+            <div className="mt-10 grid grid-cols-2 items-center gap-8 sm:grid-cols-3 lg:grid-cols-5">
+              {content.partners.map((partner, i) => {
+                const logo = (
+                  <PlaceholderImage
+                    imageKey={partner.imageKey}
+                    alt={partner.name}
+                    ratio="aspect-[3/2]"
+                    className="grayscale transition-all duration-300 hover:grayscale-0"
+                  />
+                );
+                return (
+                  <Reveal key={partner.id} delay={i * 60}>
+                    {partner.websiteUrl ? (
+                      <a href={partner.websiteUrl} target="_blank" rel="noreferrer" aria-label={partner.name}>
+                        {logo}
+                      </a>
+                    ) : (
+                      logo
+                    )}
+                  </Reveal>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* About */}
       <section className="section-py">
         <div className="container-page">
@@ -153,38 +189,6 @@ export default function Home() {
                 </Link>
               </Reveal>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Founder */}
-      <section className="section-py">
-        <div className="container-page grid gap-10 lg:grid-cols-2 lg:items-center">
-          <PlaceholderImage
-            imageKey={home.founderPreview.imageKey}
-            alt={home.founderPreview.imageAlt}
-            ratio="aspect-[4/5]"
-            objectPosition="object-top"
-          />
-          <div>
-            <p className="eyebrow">{home.founderPreview.eyebrow}</p>
-            <h2 className="mt-2 text-3xl">{home.founderPreview.name}</h2>
-            <p className="mt-4 text-ink-500">{home.founderPreview.bio}</p>
-            <p className="mt-3 text-sm font-semibold text-brand-700">{home.founderPreview.credentials}</p>
-            <div className="mt-6">
-              <p className="text-xs font-semibold uppercase tracking-wide text-ink-300">SDG Alignment</p>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {home.founderPreview.sdgAlignment.map((s: string) => (
-                  <span key={s} className="badge">
-                    {s}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <div className="mt-4">
-              <p className="text-xs font-semibold uppercase tracking-wide text-ink-300">Collaborators</p>
-              <p className="mt-2 text-sm text-ink-700">{home.founderPreview.collaborators.join(' · ')}</p>
-            </div>
           </div>
         </div>
       </section>

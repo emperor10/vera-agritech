@@ -35,6 +35,10 @@ function buildFallback(): ContentBundle {
     faqs: (raw.faqs || []).map((f: any, i: number) => ({ id: i + 1, ...f })),
     packages: (raw.packages || []).map((p: any, i: number) => ({ id: i + 1, sortOrder: p.order ?? i, ...p })),
     crops: (raw.cropsProduction?.crops || []).map((c: any, i: number) => ({ id: i + 1, ...c })),
+    // No static seed data for partners — like products, this collection is
+    // built entirely from the admin panel (Admin → Partners), so the
+    // homepage section simply stays hidden until real partners are added.
+    partners: [],
     testimonials: (raw.home?.testimonials || []).map((t: any, i: number) => ({ id: i + 1, ...t })),
     caseStudies: (raw.projects?.caseStudies || []).map((c: any, i: number) => ({ id: i + 1, ...c })),
     blogPosts: [],

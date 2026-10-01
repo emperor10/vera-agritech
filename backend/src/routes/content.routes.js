@@ -44,6 +44,11 @@ router.get('/', async (_req, res) => {
   const crops = await db
     .prepare('SELECT id, name, note, image_key AS imageKey FROM crops WHERE is_published = 1 ORDER BY sort_order ASC')
     .all();
+  const partners = await db
+    .prepare(
+      'SELECT id, name, image_key AS imageKey, website_url AS websiteUrl FROM partners WHERE is_published = 1 ORDER BY sort_order ASC'
+    )
+    .all();
   const testimonials = await db
     .prepare(
       'SELECT id, name, location, quote, image_key AS imageKey FROM testimonials WHERE is_published = 1 ORDER BY sort_order ASC'
@@ -75,6 +80,7 @@ router.get('/', async (_req, res) => {
     faqs,
     packages,
     crops,
+    partners,
     testimonials,
     caseStudies,
     blogPosts,
