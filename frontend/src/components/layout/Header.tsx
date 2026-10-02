@@ -64,10 +64,10 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-30 border-b border-ink-100/70 bg-white/95 shadow-[0_1px_2px_rgba(6,59,43,0.04)] backdrop-blur">
-      <div className="container-page flex h-20 items-center justify-between py-3">
+      <div className="container-page flex h-20 items-center justify-between py-2 sm:h-24 sm:py-3">
         <Link to="/" className="flex items-center gap-2">
           {logo.url ? (
-            <img src={logo.url} alt={logo.altText || 'Vera AgriTech'} className="h-12 w-auto object-contain" />
+            <img src={logo.url} alt={logo.altText || 'Vera AgriTech'} className="h-14 w-auto object-contain sm:h-16" />
           ) : (
             <>
               <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-900 text-white">

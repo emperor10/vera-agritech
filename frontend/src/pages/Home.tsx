@@ -73,14 +73,18 @@ export default function Home() {
           hover. Hidden entirely until at least one partner is published, so
           the homepage never shows an empty section. */}
       {content.partners.length > 0 && (
-        <section className="section-py">
+        <section className="section-py bg-brand-900">
           <div className="container-page">
             <Reveal>
-              <SectionHeading heading="Trusted By Multiple Partners" center />
+              <h2 className="text-center text-3xl text-white sm:text-4xl">Trusted By Multiple Partners</h2>
             </Reveal>
-            <div className="mt-10">
-              <PartnerMarquee partners={content.partners} />
-            </div>
+          </div>
+          {/* The marquee itself runs edge-to-edge (outside container-page) so
+              the scrolling logos bleed to the viewport edges rather than
+              stopping at the content max-width — only the heading above is
+              constrained for readability. */}
+          <div className="mt-10">
+            <PartnerMarquee partners={content.partners} />
           </div>
         </section>
       )}
