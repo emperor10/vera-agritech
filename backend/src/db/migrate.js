@@ -150,6 +150,30 @@ const SCHEMA_SQL = `
     is_published INTEGER NOT NULL DEFAULT 1
   );
 
+  CREATE TABLE IF NOT EXISTS outgrower_applications (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    reference_no TEXT,
+    full_name TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    email TEXT,
+    state TEXT,
+    lga TEXT,
+    preferred_contact TEXT,
+    farm_location TEXT NOT NULL,
+    farm_size TEXT,
+    production_area TEXT,
+    land_status TEXT,
+    current_farming_activity TEXT,
+    farming_experience TEXT,
+    preferred_crop TEXT,
+    irrigation_available INTEGER NOT NULL DEFAULT 0,
+    existing_infrastructure TEXT,
+    interests_json TEXT NOT NULL DEFAULT '[]',
+    message TEXT,
+    status TEXT NOT NULL DEFAULT 'new',
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+  );
+
   CREATE TABLE IF NOT EXISTS settings (
     key TEXT PRIMARY KEY,
     value TEXT NOT NULL

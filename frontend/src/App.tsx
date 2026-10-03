@@ -22,6 +22,7 @@ import BlogPost from './pages/BlogPost';
 import Faqs from './pages/Faqs';
 import Contact from './pages/Contact';
 import GetStarted from './pages/GetStarted';
+import Outgrower from './pages/Outgrower';
 import Privacy from './pages/Privacy';
 import NotFound from './pages/NotFound';
 
@@ -38,6 +39,7 @@ const AdminPackages = lazy(() => import('./pages/admin/AdminPackages'));
 const AdminCrops = lazy(() => import('./pages/admin/AdminCrops'));
 const AdminProducts = lazy(() => import('./pages/admin/AdminProducts'));
 const AdminPartners = lazy(() => import('./pages/admin/AdminPartners'));
+const AdminOutgrowerApplications = lazy(() => import('./pages/admin/AdminOutgrowerApplications'));
 const AdminTestimonials = lazy(() => import('./pages/admin/AdminTestimonials'));
 const AdminCaseStudies = lazy(() => import('./pages/admin/AdminCaseStudies'));
 const AdminBlog = lazy(() => import('./pages/admin/AdminBlog'));
@@ -72,6 +74,7 @@ export default function App() {
         <Route path="faqs" element={<Faqs />} />
         <Route path="contact" element={<Contact />} />
         <Route path="get-started" element={<GetStarted />} />
+        <Route path="outgrower" element={<Outgrower />} />
         <Route path="privacy" element={<Privacy />} />
         <Route path="*" element={<NotFound />} />
       </Route>
@@ -103,6 +106,7 @@ export default function App() {
         <Route path="crops" element={<AdminCrops />} />
         <Route path="products" element={<AdminProducts />} />
         <Route path="partners" element={<AdminPartners />} />
+        <Route path="outgrower-applications" element={<AdminOutgrowerApplications />} />
         <Route path="testimonials" element={<AdminTestimonials />} />
         <Route path="case-studies" element={<AdminCaseStudies />} />
         <Route path="blog" element={<AdminBlog />} />

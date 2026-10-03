@@ -178,6 +178,50 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Outgrower teaser — links through to the full /outgrower programme page. */}
+      <section className="section-py">
+        <div className="container-page">
+          <Reveal>
+            <SectionHeading
+              eyebrow="Outgrower Partnership Programme"
+              heading="Have Land? Let's Grow Together."
+              body="Vera AgriTech works with qualified landowners and independent farmers to establish productive, climate-smart farming systems through our Outgrower Partnership Programme."
+              center
+            />
+          </Reveal>
+          <div className="mt-10 grid gap-6 sm:grid-cols-3">
+            <Reveal className="h-full">
+              <div className="card h-full text-center">
+                <h3 className="text-base">Your land</h3>
+                <p className="mt-2 text-sm text-ink-500">Provide suitable land and participate in production.</p>
+              </div>
+            </Reveal>
+            <Reveal delay={100} className="h-full">
+              <div className="card h-full text-center border-brand-200">
+                <h3 className="text-base">Vera's support</h3>
+                <p className="mt-2 text-sm text-ink-500">
+                  Access infrastructure, inputs, technology and technical support, subject to programme assessment.
+                </p>
+              </div>
+            </Reveal>
+            <Reveal delay={200} className="h-full">
+              <div className="card h-full text-center">
+                <h3 className="text-base">Shared value</h3>
+                <p className="mt-2 text-sm text-ink-500">
+                  Produce is marketed through the agreed offtake structure, with proceeds settled according to the
+                  partnership agreement.
+                </p>
+              </div>
+            </Reveal>
+          </div>
+          <div className="mt-8 text-center">
+            <Link to="/outgrower" className="btn-primary">
+              Become a Vera Outgrower →
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Testimonials */}
       <section className="section-py bg-brand-50">
         <div className="container-page">

@@ -20,6 +20,7 @@ const productsRoutes = require('./routes/products.routes');
 const partnersRoutes = require('./routes/partners.routes');
 const leadsRoutes = require('./routes/leads.routes');
 const applicationsRoutes = require('./routes/applications.routes');
+const outgrowerRoutes = require('./routes/outgrower.routes');
 const settingsRoutes = require('./routes/settings.routes');
 
 const app = express();
@@ -63,6 +64,7 @@ app.use('/api', productsRoutes);
 app.use('/api', partnersRoutes);
 app.use('/api', leadsRoutes);
 app.use('/api', applicationsRoutes);
+app.use('/api', outgrowerRoutes);
 app.use('/api', settingsRoutes);
 
 app.use('/api', (_req, res) => {
