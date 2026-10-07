@@ -7,12 +7,34 @@ import type { Partner } from '../../types/content';
 // partners have been published.
 const MIN_LAP_ITEMS = 8;
 
+// Admins often type a partner's address the way people say it ("www.acme.com"
+// or "acme.com") rather than a full URL. Without a protocol the browser
+// treats that as a relative path on our own site, so the click goes nowhere.
+// Normalise to an absolute https URL, and only ever allow http(s) — never
+// javascript:/data: etc. — since this value comes from the CMS.
+function normalizeUrl(raw?: string): string | null {
+  const value = (raw || '').trim();
+  if (!value) return null;
+  const withProtocol = /^[a-z][a-z0-9+.-]*:\/\//i.test(value) ? value : `https://${value.replace(/^\/\//, '')}`;
+  try {
+    const url = new URL(withProtocol);
+    return url.protocol === 'http:' || url.protocol === 'https:' ? url.toString() : null;
+  } catch {
+    return null;
+  }
+}
+
 function PartnerLogo({ partner }: { partner: Partner }) {
   const { getImage } = useContent();
   const image = getImage(partner.imageKey, partner.name);
+  const href = normalizeUrl(partner.websiteUrl);
 
   const card = (
-    <div className="flex h-20 w-36 shrink-0 items-center justify-center rounded-2xl bg-white p-4 shadow-card sm:h-24 sm:w-44">
+    <div
+      className={`flex h-20 w-36 shrink-0 items-center justify-center rounded-2xl bg-white p-4 shadow-card transition-shadow duration-200 sm:h-24 sm:w-44 ${
+        href ? 'group-hover:shadow-soft group-focus-visible:shadow-soft' : ''
+      }`}
+    >
       {image.url ? (
         <img
           src={image.url}
@@ -28,8 +50,15 @@ function PartnerLogo({ partner }: { partner: Partner }) {
     </div>
   );
 
-  return partner.websiteUrl ? (
-    <a href={partner.websiteUrl} target="_blank" rel="noreferrer" aria-label={partner.name} className="flex">
+  return href ? (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Visit ${partner.name} website`}
+      title={`Visit ${partner.name}`}
+      className="group flex cursor-pointer rounded-2xl transition-transform duration-200 ease-out hover:-translate-y-1 focus-visible:-translate-y-1"
+    >
       {card}
     </a>
   ) : (
@@ -61,7 +90,9 @@ export function PartnerMarquee({ partners }: { partners: Partner[] }) {
   const durationSeconds = Math.max(18, lap.length * 3.5);
 
   return (
-    <div className="partner-marquee">
+    // py-3: breathing room inside the clipped (overflow-hidden) marquee so the
+    // hover lift + larger shadow on a linked logo isn't cut off at the edges.
+    <div className="partner-marquee py-3">
       <ul className="partner-marquee-track" style={{ animationDuration: `${durationSeconds}s` }} aria-label="Our partners">
         {track.map((partner, i) => (
           <li key={`${partner.id}-${i}`} className="flex">
