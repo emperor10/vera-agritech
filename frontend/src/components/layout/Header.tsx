@@ -133,6 +133,47 @@ function DesktopNavItem({ item }: { item: NavLink }) {
   );
 }
 
+const BUNDLED_LOGO = '/brand/vera-logo-lockup.png';
+
+/**
+ * Header logo. Admin-managed: whatever is uploaded in Admin → Media Library
+ * under the key `logo-mark` is shown here. Until something is uploaded (or if
+ * the uploaded file fails to load) it falls back to the lockup that ships with
+ * the site, so the header is never empty or broken.
+ */
+function HeaderLogo() {
+  const { getImage } = useContent();
+  const uploaded = getImage('logo-mark', 'Vera AgriTech');
+  const [failedUrl, setFailedUrl] = useState<string | null>(null);
+  const logoUrl = uploaded.url || '';
+  const useUploaded = logoUrl !== '' && failedUrl !== logoUrl;
+
+  return (
+    <Link to="/" aria-label="Vera AgriTech — home" className="flex shrink-0 items-center">
+      {useUploaded ? (
+        <img
+          src={logoUrl}
+          alt={uploaded.altText || 'Vera AgriTech'}
+          decoding="async"
+          fetchPriority="high"
+          onError={() => setFailedUrl(logoUrl)}
+          className="h-10 w-auto max-w-[220px] object-contain object-left min-[380px]:h-12 sm:h-14 sm:max-w-[280px] xl:h-14"
+        />
+      ) : (
+        <img
+          src={BUNDLED_LOGO}
+          alt="Vera AgriTech"
+          width={1118}
+          height={192}
+          decoding="async"
+          fetchPriority="high"
+          className="h-9 w-auto min-[380px]:h-11 sm:h-14 xl:h-12 2xl:h-14"
+        />
+      )}
+    </Link>
+  );
+}
+
 export function Header() {
   const { content } = useContent();
   const nav = content.pages.navigation;
@@ -148,24 +189,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-30 border-b border-ink-100/70 bg-white/95 shadow-[0_1px_2px_rgba(6,59,43,0.04)] backdrop-blur">
       <div className="container-page flex h-20 items-center justify-between gap-4">
-        {/* Brand lockup (icon + wordmark), trimmed and optimised for the header:
-            no built-in whitespace padding and without the tagline / pillar
-            row, which are illegible at header size. It ships with the site
-            (public/brand) so it is always crisp and correctly sized. The full
-            desktop nav (8 items + Get Started) needs ~1200px, so it only shows
-            from xl; below that the hamburger menu is used and the logo can
-            breathe. */}
-        <Link to="/" aria-label="Vera AgriTech — home" className="flex shrink-0 items-center">
-          <img
-            src="/brand/vera-logo-lockup.png"
-            alt="Vera AgriTech"
-            width={1118}
-            height={192}
-            decoding="async"
-            fetchPriority="high"
-            className="h-9 w-auto min-[380px]:h-11 sm:h-14 xl:h-12 2xl:h-14"
-          />
-        </Link>
+        <HeaderLogo />
 
         <nav className="hidden items-center gap-1 xl:flex" aria-label="Primary">
           {nav.primary.map((item: NavLink) => (
