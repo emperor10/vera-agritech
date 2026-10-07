@@ -78,7 +78,7 @@ export default function Products() {
     <>
       <Seo
         title="Products — Vegetables & Screen House Equipment"
-        description="Browse fresh vegetables sold by the kilogram and screen house equipment supplied by Vera AgriTech."
+        description="Browse fresh vegetables sold in kilogram and screen house equipment supplied by Vera AgriTech."
         path="/products"
       />
       <PageHero
