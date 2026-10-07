@@ -61,8 +61,8 @@ function GetStartedMenu() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="relative hidden lg:block" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
-      <button type="button" className="btn-primary" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
+    <div className="relative hidden xl:block" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+      <button type="button" className="btn-primary whitespace-nowrap" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
         Get Started
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
@@ -134,14 +134,8 @@ function DesktopNavItem({ item }: { item: NavLink }) {
 }
 
 export function Header() {
-  const { content, getImage } = useContent();
+  const { content } = useContent();
   const nav = content.pages.navigation;
-  // The header shows a hand-drawn placeholder mark + wordmark until a real
-  // logo is uploaded to the "logo-mark" key in Admin -> Media Library, at
-  // which point the uploaded image (already a full icon+wordmark lockup)
-  // replaces both — showing the icon/text fallback *and* the uploaded logo
-  // side by side would duplicate the brand name.
-  const logo = getImage('logo-mark');
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
 
@@ -153,29 +147,27 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-30 border-b border-ink-100/70 bg-white/95 shadow-[0_1px_2px_rgba(6,59,43,0.04)] backdrop-blur">
-      <div className="container-page flex h-20 items-center justify-between py-2 sm:h-24 sm:py-3">
-        <Link to="/" className="flex items-center gap-2">
-          {logo.url ? (
-            <img src={logo.url} alt={logo.altText || 'Vera AgriTech'} className="h-14 w-auto object-contain sm:h-16" />
-          ) : (
-            <>
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-900 text-white">
-                <svg width="22" height="22" viewBox="0 0 64 64" fill="none" aria-hidden="true">
-                  <path
-                    d="M32 46c9-2 15-10 15-20 0-3-1-6-2-8-4 6-9 9-15 10-6-1-11-4-15-10-1 2-2 5-2 8 0 10 6 18 15 20z"
-                    fill="#2f8f4e"
-                  />
-                  <path d="M32 46V22" stroke="#c98a2c" strokeWidth="2.5" strokeLinecap="round" />
-                </svg>
-              </span>
-              <span className="font-display text-lg font-bold text-brand-950">
-                Vera<span className="text-brand-600">AgriTech</span>
-              </span>
-            </>
-          )}
+      <div className="container-page flex h-20 items-center justify-between gap-4">
+        {/* Brand lockup (icon + wordmark), trimmed and optimised for the header:
+            no built-in whitespace padding and without the tagline / pillar
+            row, which are illegible at header size. It ships with the site
+            (public/brand) so it is always crisp and correctly sized. The full
+            desktop nav (8 items + Get Started) needs ~1200px, so it only shows
+            from xl; below that the hamburger menu is used and the logo can
+            breathe. */}
+        <Link to="/" aria-label="Vera AgriTech — home" className="flex shrink-0 items-center">
+          <img
+            src="/brand/vera-logo-lockup.png"
+            alt="Vera AgriTech"
+            width={1118}
+            height={192}
+            decoding="async"
+            fetchPriority="high"
+            className="h-9 w-auto min-[380px]:h-11 sm:h-14 xl:h-12 2xl:h-14"
+          />
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-1 xl:flex" aria-label="Primary">
           {nav.primary.map((item: NavLink) => (
             <DesktopNavItem key={item.label} item={item} />
           ))}
@@ -185,7 +177,7 @@ export function Header() {
 
         <button
           type="button"
-          className="inline-flex items-center justify-center rounded-full p-2 text-brand-900 lg:hidden"
+          className="inline-flex items-center justify-center rounded-full p-2 text-brand-900 xl:hidden"
           aria-label="Toggle menu"
           aria-expanded={mobileOpen}
           onClick={() => setMobileOpen((o) => !o)}
@@ -201,7 +193,7 @@ export function Header() {
       </div>
 
       {mobileOpen && (
-        <div className="border-t border-ink-100 bg-white lg:hidden">
+        <div className="border-t border-ink-100 bg-white xl:hidden">
           <div className="container-page flex flex-col gap-1 py-4">
             {nav.primary.map((item: NavLink) =>
               item.children ? (
