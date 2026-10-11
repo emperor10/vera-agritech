@@ -13,7 +13,7 @@ const TABS: { key: Category; label: string; eyebrow: string; heading: string; bo
     key: 'vegetable',
     label: 'Fresh Vegetables',
     eyebrow: 'From Our Greenhouses',
-    heading: 'Fresh vegetables, sold by the kilogram',
+    heading: 'Fresh vegetables, sold by kilogram',
     body: 'Produce grown in Vera AgriTech screen houses, priced and sold by weight (kg) for consistent, transparent ordering.',
     emptyText: 'Vegetable listings are being added — check back soon, or contact us for current availability.',
   },
