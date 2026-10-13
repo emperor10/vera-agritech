@@ -13,7 +13,7 @@ const TABS: { key: Category; label: string; eyebrow: string; heading: string; bo
     key: 'vegetable',
     label: 'Fresh Vegetables',
     eyebrow: 'From Our Greenhouses',
-    heading: 'Fresh vegetables, sold by kilogram',
+    heading: 'Fresh vegetables, sold in kilogram',
     body: 'Produce grown in Vera AgriTech screen houses, priced and sold by weight (kg) for consistent, transparent ordering.',
     emptyText: 'Vegetable listings are being added — check back soon, or contact us for current availability.',
   },
@@ -84,7 +84,7 @@ export default function Products() {
       <PageHero
         eyebrow="Our Products"
         heading="Vegetables & Screen House Equipment"
-        body="Everything Vera AgriTech grows and supplies, in one place — fresh produce sold by the kilogram, and the equipment behind every screen house we build."
+        body="Everything Vera AgriTech grows and supplies, in one place — fresh produce sold by kilogram, and the equipment behind every screen house we build."
       />
 
       <section className="section-py">
