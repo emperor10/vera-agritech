@@ -150,6 +150,24 @@ const SCHEMA_SQL = `
     is_published INTEGER NOT NULL DEFAULT 1
   );
 
+  CREATE TABLE IF NOT EXISTS product_orders (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    reference_no TEXT,
+    product_id INTEGER,
+    product_name TEXT NOT NULL,
+    product_category TEXT,
+    unit_price TEXT,
+    unit TEXT,
+    quantity TEXT NOT NULL,
+    full_name TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    email TEXT,
+    delivery_location TEXT NOT NULL,
+    notes TEXT,
+    status TEXT NOT NULL DEFAULT 'new',
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+  );
+
   CREATE TABLE IF NOT EXISTS outgrower_applications (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     reference_no TEXT,

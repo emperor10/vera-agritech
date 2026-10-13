@@ -276,6 +276,53 @@
     @apply font-bold text-brand-950;
   }
 
+  /* Product cards (/products, see ProductCard in Products.tsx).
+     Grid: tracks are at most 260px wide, wrap naturally as the viewport
+     allows, and the whole grid is centred. The 220px floor (or 100% of the
+     row on very small phones) lets a card shrink instead of overflowing.
+     Cards stretch to equal height within a row. */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 260px));
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  /* 12px radius, 4:3 image on top, equal-height flex column. The whole card
+     is clickable via the stretched "Order" button inside it (::after in the
+     markup), so there's no nested interactive markup. */
+  .product-card {
+    @apply relative flex h-full flex-col overflow-hidden rounded-xl border border-ink-100 bg-white shadow-card;
+    transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
+  }
+
+  .product-card .card-media img {
+    transition: transform 250ms ease;
+  }
+
+  /* Hover motion only where a real hover exists (mouse / trackpad). On touch
+     devices nothing depends on hover and nothing sticks after a tap: the
+     card gets a small pressed state instead. */
+  @media (hover: hover) and (pointer: fine) {
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 32px -14px rgba(6, 59, 43, 0.3);
+      border-color: var(--color-brand-300);
+    }
+
+    .product-card:hover .card-media img {
+      transform: scale(1.05);
+    }
+  }
+
+  .product-card:active {
+    transform: scale(0.99);
+  }
+
+  .product-card:focus-within {
+    border-color: var(--color-brand-500);
+  }
+
   /* Our Partners marquee wrapper: clips the track to one row and fades its
      left/right edges so logos entering/leaving the viewport don't just
      hard-cut at the container boundary. */

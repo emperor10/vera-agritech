@@ -46,6 +46,9 @@ export default function AdminLayout() {
           <NavLink to="/admin/outgrower-applications" className={navItemClass}>
             Outgrower Applications
           </NavLink>
+          <NavLink to="/admin/product-orders" className={navItemClass}>
+            Product Orders
+          </NavLink>
 
           <p className="px-3 pt-4 text-[11px] font-semibold uppercase tracking-wide text-brand-400">Collections</p>
           <NavLink to="/admin/faqs" className={navItemClass}>
