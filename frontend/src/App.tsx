@@ -40,6 +40,7 @@ const AdminCrops = lazy(() => import('./pages/admin/AdminCrops'));
 const AdminProducts = lazy(() => import('./pages/admin/AdminProducts'));
 const AdminPartners = lazy(() => import('./pages/admin/AdminPartners'));
 const AdminOutgrowerApplications = lazy(() => import('./pages/admin/AdminOutgrowerApplications'));
+const AdminProductOrders = lazy(() => import('./pages/admin/AdminProductOrders'));
 const AdminTestimonials = lazy(() => import('./pages/admin/AdminTestimonials'));
 const AdminCaseStudies = lazy(() => import('./pages/admin/AdminCaseStudies'));
 const AdminBlog = lazy(() => import('./pages/admin/AdminBlog'));
@@ -107,6 +108,7 @@ export default function App() {
         <Route path="products" element={<AdminProducts />} />
         <Route path="partners" element={<AdminPartners />} />
         <Route path="outgrower-applications" element={<AdminOutgrowerApplications />} />
+        <Route path="product-orders" element={<AdminProductOrders />} />
         <Route path="testimonials" element={<AdminTestimonials />} />
         <Route path="case-studies" element={<AdminCaseStudies />} />
         <Route path="blog" element={<AdminBlog />} />

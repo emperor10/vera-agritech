@@ -1,9 +1,10 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useContent } from '../context/ContentContext';
 import { Seo } from '../components/ui/Seo';
 import { PageHero } from '../components/ui/PageHero';
 import { SectionHeading, CtaBanner } from '../components/ui/Bits';
 import { PlaceholderImage } from '../components/ui/PlaceholderImage';
+import { ProductOrderModal } from '../components/forms/ProductOrderModal';
 import type { Product } from '../types/content';
 
 type Category = 'vegetable' | 'equipment';
@@ -27,39 +28,46 @@ const TABS: { key: Category; label: string; eyebrow: string; heading: string; bo
   },
 ];
 
-function ProductCard({ product }: { product: Product }) {
+function ProductCard({ product, onOrder }: { product: Product; onOrder: (product: Product) => void }) {
   return (
-    <div className="card flex flex-col">
-      <PlaceholderImage imageKey={product.imageKey} alt={product.name} ratio="aspect-[4/3]" className="mb-4" />
-      <h3 className="text-lg">{product.name}</h3>
-      {product.description && <p className="mt-2 text-sm text-ink-500">{product.description}</p>}
+    <article className="product-card">
+      {/* rounded-none: the card itself clips the image to its 12px corners. */}
+      <PlaceholderImage imageKey={product.imageKey} alt={product.name} ratio="aspect-[4/3]" rounded="rounded-none" />
+      <div className="flex flex-1 flex-col p-4">
+        {/* Name and description each reserve a fixed two-line slot (and clamp
+            to it), so every card is exactly the same height regardless of
+            how much text a product has. */}
+        <h3 className="line-clamp-2 min-h-[2.75rem] text-base leading-snug">{product.name}</h3>
+        <p className="mt-1.5 line-clamp-2 min-h-[2.5rem] text-sm text-ink-500">{product.description}</p>
 
-      {product.specs?.length > 0 && (
-        <ul className="mt-4 space-y-1.5">
-          {product.specs.map((spec) => (
-            <li key={spec} className="flex items-start gap-2 text-sm text-ink-700">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="mt-0.5 shrink-0 text-brand-600" aria-hidden="true">
-                <path d="M3 8.5l3 3 7-7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              {spec}
-            </li>
-          ))}
-        </ul>
-      )}
-
-      <div className="mt-auto flex items-center justify-between gap-3 pt-6">
-        <p className="stat-figure text-xl">
-          {product.price || 'Contact for pricing'}
+        <p className="stat-figure mt-auto pt-4 text-lg">
+          {product.price || <span className="text-sm font-semibold text-ink-500">Contact for pricing</span>}
           {product.price && product.unit && <span className="ml-1 text-sm font-normal text-ink-500">/ {product.unit}</span>}
         </p>
+
+        {/* Stretched button: its ::after covers the whole card, so clicking
+            anywhere on the card opens the order panel. */}
+        <button
+          type="button"
+          onClick={() => onOrder(product)}
+          aria-label={`Order ${product.name}`}
+          className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 after:absolute after:inset-0 after:content-[''] focus-visible:outline-none"
+        >
+          Order now
+          <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h9M8 3.5 12.5 8 8 12.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
       </div>
-    </div>
+    </article>
   );
 }
 
 export default function Products() {
   const { content } = useContent();
   const [activeTab, setActiveTab] = useState<Category>('vegetable');
+  const [orderProduct, setOrderProduct] = useState<Product | null>(null);
+  const closeOrder = useCallback(() => setOrderProduct(null), []);
 
   const grouped = useMemo(() => {
     const groups: Record<Category, Product[]> = { vegetable: [], equipment: [] };
@@ -112,9 +120,9 @@ export default function Products() {
           </div>
 
           {items.length > 0 ? (
-            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="product-grid mt-10">
               {items.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <ProductCard key={product.id} product={product} onOrder={setOrderProduct} />
               ))}
             </div>
           ) : (
@@ -124,6 +132,8 @@ export default function Products() {
           )}
         </div>
       </section>
+
+      {orderProduct && <ProductOrderModal product={orderProduct} onClose={closeOrder} />}
 
       <CtaBanner
         heading="Looking for a custom order or a screen house quote?"
